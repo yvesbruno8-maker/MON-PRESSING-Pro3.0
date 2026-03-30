@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SUPER CLEAN PRESSING - GESTION OFFICIELLE</title>
+    <title>SUPER CLEAN PRESSING - SYSTEME FINAL</title>
     <style>
         :root { 
             --primary: #1e3799; --secondary: #4a69bd; --success: #2ecc71; 
@@ -12,7 +12,6 @@
         
         body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 10px; background: var(--light); color: var(--dark); }
         
-        /* Animations Alertes */
         @keyframes blink { 50% { opacity: 0.4; } }
         .retard-urgent { background: #fff5f5 !important; border: 2px solid var(--danger) !important; animation: blink 1.2s infinite; }
         .today-urgent { border-left: 10px solid var(--warning) !important; background: #fffcf0 !important; }
@@ -22,7 +21,7 @@
         
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; }
         .stat-card { background: white; padding: 10px; border-radius: 15px; text-align: center; border-bottom: 4px solid var(--primary); }
-        .stat-card b { font-size: 11px; color: var(--primary); display:block; }
+        .stat-card b { font-size: 11px; display:block; margin-top: 5px; }
         .stat-card span { font-size: 8px; font-weight: bold; color: gray; text-transform: uppercase; }
 
         .stock-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
@@ -43,48 +42,50 @@
 
         .hidden { display: none !important; }
         #auth-screen { position:fixed; top:0; left:0; width:100%; height:100%; background:var(--primary); z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center; color:white; padding:20px; text-align:center;}
+
+        @media print {
+            body * { visibility: hidden; }
+            #ticket-print, #ticket-print * { visibility: visible; }
+            #ticket-print { position: absolute; left: 0; top: 0; width: 80mm; }
+        }
     </style>
 </head>
 <body>
 
 <div id="auth-screen">
-    <div style="background:white; padding:15px; border-radius:50%; margin-bottom:20px;">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="#1e3799"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-    </div>
-    <h2 style="margin:0;">SUPER CLEAN</h2>
-    <p style="font-size:12px; opacity:0.8;">Système de Gestion SUPER CLEAN PRESSING</p>
+    <h2 style="margin:0;">SUPER CLEAN PRESSING</h2>
+    <p style="font-size:12px; opacity:0.8;">Système de Gestion</p>
     <div style="width: 100%; max-width: 300px; margin-top:20px;">
-        <input type="tel" id="u-phone" placeholder="Numéro de téléphone">
-        <input type="password" id="u-pass" placeholder="Mot de passe">
-        <button onclick="login()" style="background:var(--success); margin-top:10px; height:50px;">SE CONNECTER</button>
+        <input type="tel" id="u-phone" placeholder="Téléphone">
+        <input type="password" id="u-pass" placeholder="Code PIN">
+        <button onclick="login()" style="background:var(--success); margin-top:10px; height:50px;">DÉMARRER</button>
     </div>
 </div>
 
 <div class="hidden" id="app">
     <div class="header">
-        <h3 style="margin:0; color:var(--primary);">Super CLEAN Pressing</h3>
+        <h3 style="margin:0; color:var(--primary);">SUPER CLEAN PRESSING</h3>
         <p id="user-role" style="font-size:11px; margin:5px 0; font-weight:bold; color: #666;"></p>
+        <div id="toolbar-admin"></div>
     </div>
 
     <div class="stats-grid" id="finance-grid">
-        <div class="stat-card" style="border-color:var(--success)"><span>JOUR</span><b id="sj">0 F</b></div>
-        <div id="ws" class="stat-card"><span>SEMAINE</span><b id="ss">0 F</b></div>
-        <div id="wm" class="stat-card"><span>MOIS</span><b id="sm">0 F</b></div>
+        <div class="stat-card" style="border-color:var(--success)"><span>CAISSE JOUR</span><b id="sj">0 F</b></div>
+        <div class="stat-card"><span>SEMAINE</span><b id="ss">0 F</b></div>
+        <div class="stat-card"><span>MOIS</span><b id="sm">0 F</b></div>
     </div>
 
     <div class="card" id="stock-panel">
-        <h5 style="margin:0 0 8px 0; color:var(--secondary); font-size: 11px;">🧺 LINGE A LA ZONE TECHNIQUE</h5>
+        <h5 style="margin:0 0 8px 0; color:var(--secondary); font-size: 11px;">🧺 ÉTAT DE LA ZONE TECHNIQUE (PROD)</h5>
         <div id="stock-display" class="stock-list"></div>
     </div>
 
     <div class="card" id="reception-form">
-        <h4 style="margin-top:0;">📋 Réception Client</h4>
+        <h4 style="margin-top:0;">📋 Nouvelle Réception</h4>
         <input type="text" id="client" placeholder="Nom du Client">
-        <input type="tel" id="tel" placeholder="WhatsApp (ex: 675...)">
-        
+        <input type="tel" id="tel" placeholder="WhatsApp">
         <label style="font-size:11px; font-weight:bold;">📅 Date de Retrait :</label>
         <input type="date" id="date_liv">
-
         <select id="article-list"></select>
         <select id="article-note">
             <option value="Normal">Soin Normal</option>
@@ -96,15 +97,29 @@
         
         <div id="panier-zone" style="display:none; margin-top:15px; border-top: 1px dashed #ccc; padding-top:10px;">
             <div id="panier-items" style="font-size:12px; margin-bottom:10px;"></div>
-            <div style="text-align:right; font-size:18px; font-weight:bold; color:var(--primary);">TOTAL: <span id="total-calc">0</span> F</div>
-            <button onclick="valider()" style="background:var(--success); margin-top:10px;">VALIDER LA COMMANDE</button>
+            <div style="text-align:right; font-size:16px; font-weight:bold;">TOTAL: <span id="total-calc">0</span> F</div>
+            <div style="background:#e8f4fd; padding:10px; border-radius:10px; margin-top:10px;">
+                <label style="font-size:11px; font-weight:bold;">💰 AVANCE CLIENT :</label>
+                <input type="number" id="avance-client" placeholder="0">
+            </div>
+            <button onclick="valider()" style="background:var(--success); margin-top:10px;">VALIDER & IMPRIMER</button>
         </div>
     </div>
 
+    <div class="card hidden" id="expense-panel" style="border-top: 5px solid var(--danger);">
+        <h5 style="margin:0 0 5px 0; color:var(--danger);">💸 ACHAT SAVON / AUTRE</h5>
+        <div style="display:flex; gap:5px;">
+            <input type="text" id="exp-label" placeholder="Libellé">
+            <input type="number" id="exp-amount" placeholder="Montant">
+        </div>
+        <button onclick="ajouterDepense()" style="background:var(--danger); margin-top:5px; padding:8px;">OK</button>
+    </div>
+
     <div id="main-list"></div>
-    
     <button onclick="logout()" style="background:var(--danger); margin-top:30px; opacity:0.6; font-size:12px;">DÉCONNEXION</button>
 </div>
+
+<div id="ticket-print" style="display:none;"></div>
 
 <script>
     const USERS = [
@@ -115,32 +130,9 @@
     ];
 
     const GRILLE = {
-        "LES HAUTS": [
-            {n:"T-Shirt", p:500}, {n:"Chemise", p:500}, {n:"Polo", p:500}, {n:"Pull Over", p:700},
-            {n:"Blouson", p:1000}, {n:"Démembré", p:300}, {n:"Veste 2 pièces", p:1500}, {n:"Veste 3 pièces", p:2000}
-        ],
-        "LES BAS": [
-            {n:"Pantalon simple", p:500}, {n:"Pantalon jogging", p:500}, {n:"Pantalon jeans", p:500}, 
-            {n:"Short", p:500}, {n:"Jupe simple", p:500}, {n:"Jupe plissée", p:1000}
-        ],
-        "ENSEMBLES": [
-            {n:"Costume simple", p:2000}, {n:"Costume de luxe", p:2500}, {n:"Boubou femme", p:1500},
-            {n:"Boubou homme 2 pièces", p:1500}, {n:"Boubou homme 3 pièces", p:2500}, {n:"Pyjama 2 pièces", p:1000}, {n:"Jogging", p:1500}
-        ],
-        "LES ROBES": [
-            {n:"Robe simple", p:500}, {n:"Robe de soirée", p:3000}, {n:"Kaba court", p:1000}, 
-            {n:"Kaba long", p:1500}, {n:"Toges (Prof/Avocats)", p:3500}
-        ],
-        "VÊTEMENTS ENFANTS": [
-            {n:"Ensemble Enfant", p:1000}, {n:"Robe Enfant", p:500}, {n:"Haut Enfant", p:500}, {n:"Bas Enfant", p:500}
-        ],
-        "LINGES DE LIT": [
-            {n:"1 Drap", p:750}, {n:"Ensemble 1 drap+taies", p:1500}, {n:"Ensemble 2 drap+taies", p:2000},
-            {n:"Couvre lit/Couette", p:2000}, {n:"Housse couette", p:2500}, {n:"Couverture", p:3000}
-        ],
-        "AMEUBLEMENT": [ {n:"Rideau lourd", p:1500}, {n:"Rideau léger", p:1000} ],
-        "LINGE DE BAIN": [ {n:"Petite Serviette", p:500}, {n:"Grande Serviette", p:1000}, {n:"Peignoir", p:2000} ],
-        "ACCESSOIRES": [ {n:"Tennis", p:500}, {n:"Cravate", p:500} ]
+        "LES HAUTS": [{n:"T-Shirt", p:500}, {n:"Chemise", p:500}, {n:"Polo", p:500}, {n:"Pull Over", p:700}, {n:"Veste 2p", p:1500}],
+        "LES BAS": [{n:"Pantalon", p:500}, {n:"Short", p:500}, {n:"Jupe", p:500}],
+        "LIT": [{n:"Drap", p:750}, {n:"Couverture", p:3000}, {n:"Rideau", p:1500}]
     };
 
     let user = null; let panier = [];
@@ -161,6 +153,8 @@
         if(user.r === "LAVEUR") {
             document.getElementById('finance-grid').classList.add('hidden');
             document.getElementById('reception-form').classList.add('hidden');
+        } else {
+            document.getElementById('expense-panel').classList.remove('hidden');
         }
 
         let h = ""; 
@@ -184,21 +178,50 @@
 
     function valider() {
         const c = document.getElementById('client').value, t = document.getElementById('tel').value, dl = document.getElementById('date_liv').value;
-        if(!c || !t || !dl) return alert("Champs vides !");
-        const cmd = { uid: "SC-"+Date.now().toString().slice(-4), c, t, items: [...panier], tot: parseInt(document.getElementById('total-calc').innerText), ts: Date.now(), liv: dl, date_rec: new Date().toLocaleDateString('fr-FR') };
+        const av = parseInt(document.getElementById('avance-client').value) || 0;
+        if(!c || !t || !dl || panier.length === 0) return alert("Veuillez remplir tous les champs !");
+        
+        const totalCmd = panier.reduce((s, i) => s + i.p, 0);
+        const cmd = { 
+            uid: "SC-"+Math.floor(1000 + Math.random() * 9000), c, t, 
+            items: [...panier], tot: totalCmd, avance: av, reste: totalCmd - av,
+            ts: Date.now(), liv: dl, date_rec: new Date().toLocaleDateString('fr-FR') 
+        };
+        
         let db = JSON.parse(localStorage.getItem('sc_db')) || [];
         db.push(cmd); localStorage.setItem('sc_db', JSON.stringify(db));
-        location.reload();
+        imprimerTicket(cmd);
+        
+        panier = [];
+        document.getElementById('client').value = "";
+        document.getElementById('avance-client').value = "";
+        document.getElementById('panier-zone').style.display = 'none';
+        update();
     }
 
     function update() {
         const db = JSON.parse(localStorage.getItem('sc_db')) || [];
+        const arc = JSON.parse(localStorage.getItem('sc_archives')) || [];
+        const exp = JSON.parse(localStorage.getItem('sc_expenses')) || [];
+        const todayStr = new Date().toLocaleDateString('fr-FR');
         const isoToday = new Date().toISOString().split('T')[0];
         
         // Finances
         if(user.r !== "LAVEUR") {
-            let rJ = 0; db.forEach(x => { if(x.date_rec === new Date().toLocaleDateString('fr-FR')) rJ += x.tot; });
-            document.getElementById('sj').innerText = rJ.toLocaleString() + " F";
+            let recJ = 0; let depJ = 0;
+            [...db, ...arc].forEach(x => { if(x.date_rec === todayStr) recJ += x.avance; });
+            exp.forEach(e => { if(e.date === todayStr) depJ += e.montant; });
+            document.getElementById('sj').innerHTML = `<span style="color:var(--success)">+${recJ}</span> | <span style="color:var(--danger)">-${depJ}</span><br><b>${recJ-depJ} F</b>`;
+            
+            // Toolbar Admin
+            if(user.r === "ADMIN") {
+                document.getElementById('toolbar-admin').innerHTML = `
+                    <div style="display:flex; gap:5px; justify-content:center; margin-top:10px;">
+                        <button onclick="voirHistorique()" style="background:var(--dark); font-size:9px; width:auto; padding:5px 10px;">📂 LITIGES</button>
+                        <button onclick="voirJournalDepenses()" style="background:var(--danger); font-size:9px; width:auto; padding:5px 10px;">💸 DÉPENSES</button>
+                        <button onclick="sauvegarderDonnees()" style="background:var(--secondary); font-size:9px; width:auto; padding:5px 10px;">💾 BACKUP</button>
+                    </div>`;
+            }
         }
 
         // Stock
@@ -209,10 +232,10 @@
         document.getElementById('stock-display').innerHTML = sH || "Atelier vide";
 
         // Liste
-        document.getElementById('main-list').innerHTML = `<h4>📦 Liste de Production</h4>` + db.reverse().map(x => {
-            let uC = "", bC = "bg-gray", lbl = "Sortie: " + new Date(x.liv).toLocaleDateString('fr-FR'), late = false;
-            if (x.liv < isoToday) { uC = "retard-urgent"; bC = "bg-red"; lbl = "⚠️ RETARD"; late = true; }
-            else if (x.liv === isoToday) { uC = "today-urgent"; bC = "bg-orange"; lbl = "🔥 AUJOURD'HUI"; late = true; }
+        document.getElementById('main-list').innerHTML = `<h4>📦 Production en cours</h4>` + db.reverse().map(x => {
+            let uC = "", bC = "bg-gray", lbl = "Prévu: " + new Date(x.liv).toLocaleDateString('fr-FR');
+            if (x.liv < isoToday) { uC = "retard-urgent"; bC = "bg-red"; lbl = "⚠️ RETARD"; }
+            else if (x.liv === isoToday) { uC = "today-urgent"; bC = "bg-orange"; lbl = "🔥 AUJOURD'HUI"; }
 
             return `
             <div class="commande-card ${uC}">
@@ -220,17 +243,81 @@
                 <strong>${x.c}</strong><br>
                 <div class="status-badge ${bC}">${lbl}</div>
                 <div style="font-size:11px; margin: 8px 0;">${x.items.map(i => `• ${i.n} [${i.note}]`).join('<br>')}</div>
+                <div style="font-size:12px; color:var(--danger); font-weight:bold; margin-bottom:10px;">RESTE À PAYER: ${x.reste} F</div>
                 <div style="display:flex; gap:5px;">
-                   ${user.r !== 'LAVEUR' ? `<button onclick="window.open('https://wa.me/237${x.t}')" style="background:#25D366; font-size:10px; width:auto; padding:8px 12px;">WhatsApp</button>` : ''}
-                   ${late && user.r !== 'LAVEUR' ? `<button onclick="rappel('${x.c}','${x.t}')" style="background:var(--warning); font-size:10px; width:auto; padding:8px 12px;">Rappel</button>` : ''}
-                   <button onclick="finish('${x.uid}')" style="background:var(--success); font-size:10px; width:auto; padding:8px 12px;">LIVRÉ ✅</button>
+                   <button onclick="finish('${x.uid}')" style="background:var(--success); font-size:10px; padding:8px 12px;">LIVRÉ ✅</button>
                 </div>
             </div>`;
         }).join('');
     }
 
-    function rappel(n, t) { window.open(`https://wa.me/237${t}?text=${encodeURIComponent("Bonjour "+n+", Super Clean Pressing vous informe que votre linge est prêt. Merci !")}`); }
-    function finish(id) { if(confirm("Sortir le linge du système ?")) { let db = JSON.parse(localStorage.getItem('sc_db')).filter(x => x.uid !== id); localStorage.setItem('sc_db', JSON.stringify(db)); location.reload(); } }
+    function finish(id) {
+        if(confirm("Confirmer la livraison et archiver pour historique ?")) {
+            let db = JSON.parse(localStorage.getItem('sc_db')) || [];
+            let archives = JSON.parse(localStorage.getItem('sc_archives')) || [];
+            const idx = db.findIndex(x => x.uid === id);
+            if(idx > -1) {
+                let cmd = db[idx];
+                cmd.date_livraison_reelle = new Date().toLocaleString('fr-FR');
+                archives.push(cmd);
+                db.splice(idx, 1);
+                localStorage.setItem('sc_db', JSON.stringify(db));
+                localStorage.setItem('sc_archives', JSON.stringify(archives));
+                update();
+            }
+        }
+    }
+
+    function ajouterDepense() {
+        const l = document.getElementById('exp-label').value, a = parseInt(document.getElementById('exp-amount').value);
+        if(!l || !a) return alert("Remplissez la dépense !");
+        let exps = JSON.parse(localStorage.getItem('sc_expenses')) || [];
+        exps.push({ label:l, montant:a, date:new Date().toLocaleDateString('fr-FR'), ts:Date.now() });
+        localStorage.setItem('sc_expenses', JSON.stringify(exps));
+        document.getElementById('exp-label').value = ""; document.getElementById('exp-amount').value = "";
+        update();
+    }
+
+    function voirHistorique() {
+        const arc = JSON.parse(localStorage.getItem('sc_archives')) || [];
+        let html = `<div id="m-h" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:10000; padding:15px; overflow-y:auto;">
+            <button onclick="document.getElementById('m-h').remove()" style="background:var(--danger)">FERMER</button>
+            <input type="text" id="s-h" onkeyup="filterH()" placeholder="🔍 Chercher client ou ID..." style="margin:10px 0; border:2px solid var(--primary)">
+            <div id="h-cont">` + arc.reverse().map(x => `<div class="h-item" style="border-bottom:1px solid #ddd; padding:10px;"><b>${x.c}</b> (${x.uid})<br><small>Recu: ${x.date_rec} | Sorti: ${x.date_livraison_reelle}<br>Articles: ${x.items.map(i=>i.n).join(',')}</small></div>`).join('') + `</div></div>`;
+        document.body.insertAdjacentHTML('beforeend', html);
+    }
+    function filterH() { 
+        let v = document.getElementById('s-h').value.toLowerCase();
+        document.querySelectorAll('.h-item').forEach(i => i.style.display = i.innerText.toLowerCase().includes(v) ? 'block' : 'none');
+    }
+
+    function voirJournalDepenses() {
+        const ex = JSON.parse(localStorage.getItem('sc_expenses')) || [];
+        let html = `<div id="m-e" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:10001; padding:15px; overflow-y:auto;">
+            <button onclick="document.getElementById('m-e').remove()" style="background:var(--dark)">FERMER JOURNAL</button>
+            <h3 style="color:var(--danger)">DÉPENSES EFFECTUÉES</h3>` + 
+            ex.reverse().map(e => `<div style="padding:10px; border-bottom:1px solid #eee;">${e.date} : <b>${e.label}</b> - <span style="color:red">${e.montant} F</span></div>`).join('') + `</div>`;
+        document.body.insertAdjacentHTML('beforeend', html);
+    }
+
+    function sauvegarderDonnees() {
+        const data = { prod: JSON.parse(localStorage.getItem('sc_db')), arc: JSON.parse(localStorage.getItem('sc_archives')), exp: JSON.parse(localStorage.getItem('sc_expenses')) };
+        const blob = new Blob([JSON.stringify(data, null, 2)], {type : 'application/json'});
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'backup_super_clean.json'; a.click();
+    }
+
+    function imprimerTicket(cmd) {
+        const t = document.getElementById('ticket-print');
+        t.innerHTML = `<div style="text-align:center; font-family:monospace; padding:10px;">
+            <h3>SUPER CLEAN PRESSING</h3>
+            <p>ID: ${cmd.uid} | Client: ${cmd.c}</p><hr>
+            <div style="text-align:left">${cmd.items.map(i=>`• ${i.n} [${i.note}]`).join('<br>')}</div><hr>
+            <div style="text-align:right">TOTAL: ${cmd.tot} F<br><b>AVANCE: ${cmd.avance} F</b><br>RESTE: ${cmd.reste} F</div><hr>
+            <p>Date retrait: ${new Date(cmd.liv).toLocaleDateString('fr-FR')}</p>
+        </div>`;
+        window.print();
+    }
+
     function logout() { sessionStorage.clear(); location.reload(); }
     window.onload = () => { if(sessionStorage.getItem('sc_u')) { user = JSON.parse(sessionStorage.getItem('sc_u')); init(); } };
 </script>
