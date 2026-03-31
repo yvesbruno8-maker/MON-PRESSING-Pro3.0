@@ -1,8 +1,9 @@
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SUPER CLEAN SYSTEM v4.0 - TRAÇABILITÉ TOTALE</title>
+    <title>SUPER CLEAN SYSTEM v5.0 - GESTION TOTALE & ACCESSOIRES</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -10,34 +11,29 @@
             --danger: #e74c3c; --warning: #f39c12; --dark: #2f3542; 
             --light: #f1f2f6; --radius: 12px;
         }
-        body { font-family: 'Inter', sans-serif; margin: 0; padding: 10px; background: var(--light); color: var(--dark); font-size: 14px; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 10px; background: var(--light); color: var(--dark); font-size: 14px; }
         .hidden { display: none !important; }
-        .card { background: white; padding: 15px; border-radius: var(--radius); box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 12px; border: 1px solid #eee; position: relative; }
+        .card { background: white; padding: 15px; border-radius: var(--radius); box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 12px; border: 1px solid #eee; }
         input, select, button { width: 100%; padding: 12px; margin: 5px 0; border-radius: 8px; border: 1px solid #ccc; font-size: 14px; box-sizing: border-box; outline: none; }
         button { background: var(--primary); color: white; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
         button:active { transform: scale(0.96); }
         
-        /* Navigation Stricte */
         .nav-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-bottom: 15px; position: sticky; top: 0; z-index: 1000; background: var(--light); padding: 5px 0; }
         .nav-bar button { background: white; color: var(--primary); border: 1px solid var(--primary); font-size: 8px; height: 50px; font-weight: 800; padding: 2px; }
         .nav-bar button.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(30, 55, 153, 0.3); }
 
-        /* Atelier & Suivi */
         .progress-container { background: #e0e0e0; height: 14px; border-radius: 20px; margin: 10px 0; overflow: hidden; border: 1px solid #ccc; }
         .progress-fill { background: linear-gradient(90deg, #2ecc71, #27ae60); height: 100%; transition: 0.6s ease-in-out; width: 0%; }
         .late-alert { background: var(--danger); color: white; padding: 6px; border-radius: 6px; font-size: 10px; font-weight: 800; animation: blink 0.8s infinite; text-align: center; margin-bottom: 10px; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        /* Badge Employé */
-        .emp-badge { font-size: 9px; background: #eee; padding: 2px 5px; border-radius: 4px; color: #666; font-style: italic; }
-        
-        /* Stats & Tableau de bord */
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
         .stat-box { padding: 15px; border-radius: 10px; text-align: center; color: white; font-weight: bold; }
         .stat-val { font-size: 18px; font-weight: 800; display: block; }
 
         .item-line { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #f1f1f1; }
         .item-ready { background: #f0fff4 !important; color: #27ae60; }
+        .emp-badge { font-size: 9px; background: #eee; padding: 2px 5px; border-radius: 4px; color: #666; }
 
         @media print { body * { visibility: hidden; } #ticket-print, #ticket-print * { visibility: visible; } #ticket-print { display: block !important; position: absolute; left: 0; top: 0; width: 80mm; } }
     </style>
@@ -48,9 +44,9 @@
     <img src="https://i.postimg.cc/kMj5ffyz/Whats-App-Image-2025-07-02-a-05-55-51-f9e5b9e3.jpg" style="max-width:140px; border-radius:50%; border: 4px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
     <h1 style="color:var(--primary); font-weight:900; margin-top:15px;">SUPER CLEAN</h1>
     <div style="width:290px;">
-        <input type="text" id="u-login" placeholder="Identifiant (ex: admin)">
-        <input type="password" id="u-pass" placeholder="Mot de passe (ex: 0000)">
-        <button onclick="login()" style="height:55px; font-size:16px; margin-top:10px;">OUVRIR LA SESSION</button>
+        <input type="text" id="u-login" placeholder="Identifiant (admin)">
+        <input type="password" id="u-pass" placeholder="Mot de passe (0000)">
+        <button onclick="login()" style="height:55px; font-size:16px; margin-top:10px;">OUVRIR SESSION</button>
     </div>
 </div>
 
@@ -64,31 +60,31 @@
 
     <div id="section-caisse" class="tab-content">
         <div class="card">
-            <div id="user-display" style="font-size:10px; color:var(--primary); font-weight:bold; margin-bottom:5px;">Connecté : -</div>
-            <input type="tel" id="tel-client" placeholder="WhatsApp Client (Recherche...)" onkeyup="rechercherClient()">
-            <input type="text" id="client-nom" placeholder="Nom Complet">
+            <div id="user-display" style="font-size:10px; color:var(--primary); font-weight:bold; margin-bottom:5px;">Opérateur : -</div>
+            <input type="tel" id="tel-client" placeholder="WhatsApp (Recherche automatique...)" onkeyup="rechercherClient()">
+            <input type="text" id="client-nom" placeholder="Nom Complet du Client">
             <label style="font-size:11px; font-weight:bold; color:var(--primary);">DATE DE RETRAIT PRÉVUE :</label>
             <input type="date" id="date-retrait">
-            <select id="select-article" style="border: 2px solid var(--secondary);"></select>
-            <button onclick="ajouterAuPanier()" style="background:var(--secondary);">+ AJOUTER L'ARTICLE</button>
+            <select id="select-article" style="border: 2px solid var(--secondary); font-weight:bold;"></select>
+            <button onclick="ajouterAuPanier()" style="background:var(--secondary); height:50px;">+ AJOUTER L'ARTICLE</button>
         </div>
 
         <div id="panier-liste"></div>
 
         <div class="card" style="background:var(--dark); color:white;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span>NET À PAYER :</span>
+                <span>TOTAL À ENCAISSER :</span>
                 <b id="total-caisse" style="font-size:24px; color:var(--success);">0 F</b>
             </div>
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;">
                 <select id="mode-pay">
-                    <option value="Cash">💵 Cash</option>
+                    <option value="Cash">💵 Cash (Espèces)</option>
                     <option value="OM">🍊 Orange Money</option>
                     <option value="Momo">🟡 MTN Momo</option>
                 </select>
-                <input type="number" id="paye-caisse" placeholder="Avance versée" oninput="calculerReste()">
+                <input type="number" id="paye-caisse" placeholder="Avance" oninput="calculerReste()">
             </div>
-            <div id="reste-caisse" style="text-align:right; font-size:12px; color:var(--warning); font-weight:800;">Reste: 0 F</div>
+            <div id="reste-caisse" style="text-align:right; font-size:12px; color:var(--warning); font-weight:800;">Reste : 0 F</div>
         </div>
         <button onclick="validerCommande()" style="background:var(--success); height:65px; font-size:18px;">🖨️ VALIDER & ENCAISSER</button>
     </div>
@@ -106,13 +102,13 @@
             <h4>📦 Approvisionnement manuel</h4>
             <select id="upd-stock-item"></select>
             <input type="number" id="upd-stock-qte" placeholder="Quantité à ajouter">
-            <button onclick="modifierStockManuel()" style="background:var(--warning); color:black;">AJOUTER AU STOCK</button>
+            <button onclick="modifierStockManuel()" style="background:var(--warning); color:black;">METTRE À JOUR LE STOCK</button>
         </div>
     </div>
 
     <div id="section-admin" class="tab-content hidden">
         <div class="card">
-            <h3>📊 Recettes & Ventilation (Par Période)</h3>
+            <h3>📊 Ventilation des Recettes</h3>
             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px;">
                 <button onclick="afficherStats('jour')" id="sj">JOUR</button>
                 <button onclick="afficherStats('mois')" id="sm">MOIS</button>
@@ -122,11 +118,11 @@
         </div>
 
         <div class="card">
-            <h3>👥 Gestion du Personnel (Accès Admin)</h3>
+            <h3>👥 Gestion du Personnel</h3>
             <div id="staff-list"></div>
             <hr>
             <h4>➕ Ajouter un employé</h4>
-            <input type="text" id="ns-nom" placeholder="Nom complet">
+            <input type="text" id="ns-nom" placeholder="Nom">
             <input type="text" id="ns-log" placeholder="Login">
             <input type="password" id="ns-pass" placeholder="Mot de passe">
             <button onclick="ajouterEmploye()" style="background:var(--success);">CRÉER LE COMPTE</button>
@@ -134,38 +130,73 @@
     </div>
 </div>
 
-<div id="ticket-print" style="display:none; font-family:monospace; width:80mm; padding:10px; border: 1px solid black;">
-    <center>
-        <b style="font-size:16px;">SUPER CLEAN PRESSING</b><br>
-        NKOUONGA, IMMEUBLE KARCHE<br>
-        --------------------------------
-    </center>
+<div id="ticket-print" style="display:none; font-family:monospace; width:80mm; padding:10px;">
+    <center><b style="font-size:16px;">SUPER CLEAN PRESSING</b><br>NKOUONGA, IMMEUBLE KARCHE<br>--------------------------------</center>
     <div id="tk-content" style="font-size:12px; margin-top:10px;"></div>
     <center><br>*** MERCI DE VOTRE CONFIANCE ***</center>
 </div>
 
 <script>
-// --- DONNÉES DE BASE ---
+// --- GRILLE TARIFAIRE ENTIÈRE SANS SIMPLIFICATION ---
 const GRILLE = {
-    "HAUTS": {"Chemise": 500, "Veste": 1500, "T-Shirt": 500, "Polo": 500, "Pull": 700},
-    "BAS": {"Pantalon": 500, "Jupe": 500, "Jupe plissée": 1000},
-    "TENUES": {"Costume 2p": 2500, "Robe soirée": 3000, "Boubou": 2000, "Toge": 3500},
-    "AUTRE": {"Drap": 1000, "Couette": 2000, "Rideau": 1500}
+    "HAUTS": {
+        "Chemise Homme": 500,
+        "Chemise Amidonnee": 700,
+        "Veste Seule": 1500,
+        "T-Shirt": 500,
+        "Polo": 500,
+        "Pull / Sweat": 700,
+        "Manteau": 2500,
+        "Blouson": 3500
+    },
+    "BAS": {
+        "Pantalon Classique": 500,
+        "Pantalon Lin": 800,
+        "Short": 400,
+        "Jupe Simple": 500,
+        "Jupe Plissee": 1000,
+        "Combinaison": 1500
+    },
+    "TENUES": {
+        "Costume 2 Pieces": 2500,
+        "Costume 3 Pieces": 3500,
+        "Robe de Soiree": 3000,
+        "Robe de Mariee": 15000,
+        "Robe Simple": 1000,
+        "Toge Graduation": 3500,
+        "Boubou Simple": 2000,
+        "Boubou Bazin Amidon": 3500
+    },
+    "MAISON": {
+        "Drap": 1000,
+        "Taie oreiller": 300,
+        "Couette": 2500,
+        "Couverture": 3000,
+        "Rideau (m2)": 1500,
+        "Nappe de table": 700,
+        "Serviette de bain": 500
+    },
+    "ACCESSOIRES": {
+        "Tennis": 1500,
+        "Tennis Cuir": 2500,
+        "Cravate": 500,
+        "Casquette": 500,
+        "Sac à main": 2500,
+        "Echarpe": 500
+    }
 };
 
-let db = JSON.parse(localStorage.getItem('sc_db_v4')) || [];
-let stocks = JSON.parse(localStorage.getItem('sc_stocks_v4')) || [
+let db = JSON.parse(localStorage.getItem('sc_db_v5')) || [];
+let stocks = JSON.parse(localStorage.getItem('sc_stocks_v5')) || [
     {id:'savon', nom:"Savon Liquide", qte:50, unite:"L"}, 
     {id:'parfum', nom:"Parfum", qte:10, unite:"L"},
-    {id:'emballage', nom:"Housses Plastiques", qte:200, unite:"pcs"}
+    {id:'housses', nom:"Housses Plastiques", qte:200, unite:"pcs"}
 ];
-let staff = JSON.parse(localStorage.getItem('sc_staff_v4')) || [
-    {nom:"Gérant", login:"admin", pass:"0000", role:"ADMIN"}
-];
+let staff = JSON.parse(localStorage.getItem('sc_staff_v5')) || [{nom:"Directeur", login:"admin", pass:"0000", role:"ADMIN"}];
 let panier = [];
 let currentUser = null;
 
-// --- GESTION DES ACCÈS ---
+// --- LOGIQUE AUTH ---
 function login() {
     const l = document.getElementById('u-login').value;
     const p = document.getElementById('u-pass').value;
@@ -176,12 +207,12 @@ function login() {
         document.getElementById('app').classList.remove('hidden');
         document.getElementById('user-display').innerText = `Opérateur : ${currentUser.nom}`;
         initApp();
-    } else { alert("Identifiants incorrects !"); }
+    } else alert("Identifiants incorrects !");
 }
 
 function initApp() {
     const s = document.getElementById('select-article');
-    s.innerHTML = '<option value="">-- Choisir Article --</option>';
+    s.innerHTML = '<option value="">-- Sélectionner un article --</option>';
     for(let cat in GRILLE) {
         let g = document.createElement('optgroup'); g.label = cat;
         for(let art in GRILLE[cat]) {
@@ -194,7 +225,7 @@ function initApp() {
     afficherStocks();
 }
 
-// --- GESTION CAISSE ---
+// --- LOGIQUE CAISSE ---
 function ajouterAuPanier() {
     const s = document.getElementById('select-article');
     if(!s.value) return;
@@ -223,14 +254,12 @@ function renderPanier() {
 function calculerReste() {
     const t = panier.reduce((a,b) => a+b.prix, 0);
     const p = parseInt(document.getElementById('paye-caisse').value) || 0;
-    document.getElementById('reste-caisse').innerText = `Reste à payer : ${Math.max(0, t - p)} F`;
+    document.getElementById('reste-caisse').innerText = `Reste : ${Math.max(0, t - p)} F`;
 }
 
 function validerCommande() {
     const nom = document.getElementById('client-nom').value;
     const dateR = document.getElementById('date-retrait').value;
-    const paye = parseInt(document.getElementById('paye-caisse').value) || 0;
-    
     if(!nom || !dateR || panier.length === 0) return alert("Veuillez remplir toutes les informations !");
 
     const ticket = {
@@ -239,7 +268,7 @@ function validerCommande() {
         tel: document.getElementById('tel-client').value,
         articles: [...panier],
         total: panier.reduce((a,b)=>a+b.prix,0),
-        paye: paye,
+        paye: parseInt(document.getElementById('paye-caisse').value) || 0,
         mode: document.getElementById('mode-pay').value,
         date_depot: new Date().toLocaleDateString('fr-FR'),
         retrait: dateR,
@@ -248,26 +277,25 @@ function validerCommande() {
         timestamp: new Date().getTime()
     };
 
-    // Déduction auto stocks (Dose moyenne par vêtement)
+    // Déduction auto stocks dynamique
     stocks[0].qte -= (panier.length * 0.05); // Savon
     stocks[1].qte -= (panier.length * 0.01); // Parfum
     stocks[2].qte -= panier.length;         // Housses
-    localStorage.setItem('sc_stocks_v4', JSON.stringify(stocks));
+    localStorage.setItem('sc_stocks_v5', JSON.stringify(stocks));
 
     db.unshift(ticket);
-    localStorage.setItem('sc_db_v4', JSON.stringify(db));
+    localStorage.setItem('sc_db_v5', JSON.stringify(db));
 
-    // Préparation Impression
     document.getElementById('tk-content').innerHTML = `
-        TICKET #${ticket.id}<br>CAISSIER: ${ticket.caissier}<br>CLIENT: ${ticket.client}<br>DATE DEPOT: ${ticket.date_depot}<br><b>RETRAIT LE: ${ticket.retrait}</b><hr>
+        TICKET #${ticket.id}<br>CAISSIER: ${ticket.caissier}<br>CLIENT: ${ticket.client}<br>RETRAIT LE: ${ticket.retrait}<hr>
         ${panier.map(a => `${a.nom} : ${a.prix}F`).join('<br>')}<hr>
-        TOTAL: ${ticket.total}F | PAYÉ: ${ticket.paye}F<br><b>SOLDE: ${ticket.total - ticket.paye}F</b><br>MODE: ${ticket.mode}
+        TOTAL: ${ticket.total}F | SOLDE: ${ticket.total - ticket.paye}F
     `;
     window.print();
     location.reload();
 }
 
-// --- GESTION ATELIER (AVEC TRAÇABILITÉ) ---
+// --- LOGIQUE ATELIER & TRAÇABILITÉ ---
 function afficherAtelier() {
     const list = document.getElementById('atelier-liste');
     const orders = db.filter(t => t.statut !== "Livré");
@@ -281,8 +309,8 @@ function afficherAtelier() {
 
         return `
             <div class="card" style="border-left: 6px solid ${prog===100?'var(--success)':'var(--primary)'}">
-                ${retard && prog < 100 ? '<div class="late-alert">⚠️ RETARD : LIVRAISON URGENTE</div>' : ''}
-                <div style="display:flex; justify-content:space-between;"><b>#${t.id} - ${t.client}</b><small>Retrait: ${t.retrait}</small></div>
+                ${retard && prog < 100 ? '<div class="late-alert">⚠️ RETARD DE LIVRAISON</div>' : ''}
+                <div style="display:flex; justify-content:space-between;"><b>#${t.id} - ${t.client}</b><small>Le: ${t.retrait}</small></div>
                 <div class="progress-container"><div class="progress-fill" style="width:${prog}%"></div></div>
                 <div style="font-size:10px; margin-bottom:5px;">Encaissé par : ${t.caissier}</div>
                 ${t.articles.map(art => `
@@ -292,36 +320,36 @@ function afficherAtelier() {
                             `<button onclick="marquerFini(${t.id}, ${art.uid})" style="width:auto; padding:4px 8px; font-size:10px; background:var(--success);">TERMINER</button>` : 
                             `<span class="emp-badge">Fait par: ${art.done_by}</span>`}
                     </div>`).join('')}
-                ${prog === 100 ? `<button onclick="livrerFinal(${t.id})" style="background:#000; margin-top:10px; height:40px;">LIVRER AU CLIENT (Encaisser ${t.total-t.paye}F)</button>` : ''}
+                ${prog === 100 ? `<button onclick="livrerFinal(${t.id})" style="background:#000; margin-top:10px;">📦 LIVRER (Solde: ${t.total-t.paye}F)</button>` : ''}
             </div>`;
     }).join('');
 }
 
 function marquerFini(tid, auid) {
-    const loc = prompt("Emplacement (Casier/Cintre) ?");
+    const loc = prompt("Emplacement (Casier/Rayon) ?");
     if(!loc) return;
     const ticket = db.find(x => x.id === tid);
     const art = ticket.articles.find(a => a.uid === auid);
     art.pret = true;
     art.loc = loc;
-    art.done_by = currentUser.nom; // Enregistre l'ouvrier qui a fini la pièce
-    localStorage.setItem('sc_db_v4', JSON.stringify(db));
+    art.done_by = currentUser.nom;
+    localStorage.setItem('sc_db_v5', JSON.stringify(db));
     afficherAtelier();
 }
 
 function livrerFinal(id) {
     const t = db.find(x => x.id === id);
-    if(confirm(`Confirmer la livraison et l'encaissement du solde (${t.total - t.paye}F) ?`)) {
+    if(confirm(`Confirmer la livraison finale ? Solde à percevoir : ${t.total - t.paye}F`)) {
         t.statut = "Livré";
-        t.paye = t.total; // Solde le paiement
-        localStorage.setItem('sc_db_v4', JSON.stringify(db));
+        t.paye = t.total;
+        localStorage.setItem('sc_db_v5', JSON.stringify(db));
         afficherAtelier();
     }
 }
 
-// --- GESTION ADMIN (VENTILATION ET STAFF) ---
+// --- STATS & ADMIN PERSONNEL ---
 function afficherStats(periode) {
-    if(currentUser.role !== "ADMIN") return alert("Accès réservé au Gérant !");
+    if(currentUser.role !== "ADMIN") return alert("Accès Gérant uniquement !");
     const now = new Date();
     let cash = 0, om = 0, momo = 0;
     db.forEach(t => {
@@ -350,25 +378,24 @@ function ajouterEmploye() {
     const n = document.getElementById('ns-nom').value, l = document.getElementById('ns-log').value, p = document.getElementById('ns-pass').value;
     if(n && l && p) {
         staff.push({nom:n, login:l, pass:p, role:"STAFF"});
-        localStorage.setItem('sc_staff_v4', JSON.stringify(staff));
+        localStorage.setItem('sc_staff_v5', JSON.stringify(staff));
         afficherPersonnel();
-        document.getElementById('ns-nom').value = ""; document.getElementById('ns-log').value = ""; document.getElementById('ns-pass').value = "";
-        alert("Nouveau compte créé !");
+        alert("Compte créé !");
     }
 }
 
 function afficherPersonnel() {
     document.getElementById('staff-list').innerHTML = staff.map((e, i) => `
         <div class="item-line">
-            <span><b>${e.nom}</b> (${e.role})</span>
-            ${i !== 0 ? `<button onclick="supprimerStaff(${i})" style="width:auto; padding:5px; background:var(--danger); font-size:10px;">Suppr.</button>` : '<i>(Gérant)</i>'}
+            <span><b>${e.nom}</b></span>
+            ${i !== 0 ? `<button onclick="supprimerStaff(${i})" style="width:auto; padding:5px; background:var(--danger); font-size:10px;">Supprimer</button>` : '<i>(Gérant)</i>'}
         </div>`).join('');
 }
 
 function supprimerStaff(i) {
     if(confirm("Supprimer ce compte ?")) {
         staff.splice(i,1);
-        localStorage.setItem('sc_staff_v4',JSON.stringify(staff));
+        localStorage.setItem('sc_staff_v5',JSON.stringify(staff));
         afficherPersonnel();
     }
 }
@@ -380,10 +407,10 @@ function afficherStocks() {
 
 function modifierStockManuel() {
     const id = document.getElementById('upd-stock-item').value, q = parseFloat(document.getElementById('upd-stock-qte').value);
-    if(!isNaN(q)) { stocks.find(s => s.id === id).qte += q; localStorage.setItem('sc_stocks_v4', JSON.stringify(stocks)); afficherStocks(); }
+    if(!isNaN(q)) { stocks.find(s => s.id === id).qte += q; localStorage.setItem('sc_stocks_v5', JSON.stringify(stocks)); afficherStocks(); }
 }
 
-// --- NAVIGATION ---
+// --- NAV ---
 function tab(id) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
     document.querySelectorAll('.nav-bar button').forEach(b => b.classList.remove('active'));
