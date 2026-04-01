@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SUPER CLEAN ERP v18.0 - TITANIUM</title>
+    <title>SUPER CLEAN PRESSING ERP v18.0 - TITANIUM</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -45,7 +45,7 @@
     <div style="height:100vh; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, var(--primary), var(--secondary));">
         <div style="background:white; padding:40px; border-radius:30px; width:85%; max-width:340px; text-align:center; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
             <img src="https://i.postimg.cc/kMj5ffyz/Whats-App-Image-2025-07-02-a-05-55-51-f9e5b9e3.jpg" style="width:100px; border-radius:50%; border: 4px solid var(--light); margin-bottom:15px;">
-            <h2 style="margin:0; color:var(--primary); font-weight:900;">SUPER CLEAN</h2>
+            <h2 style="margin:0; color:var(--primary); font-weight:900;">SUPER CLEAN PRESSING</h2>
             <p style="font-size:11px; color:var(--secondary); font-weight:700; margin-bottom:25px; letter-spacing: 1px;">LE BIEN-ÊTRE DE VOS VÊTEMENTS</p>
             <input type="text" id="u-login" placeholder="Identifiant">
             <input type="password" id="u-pass" placeholder="Mot de passe">
@@ -58,7 +58,7 @@
     <div class="header">
         <div style="display:flex; align-items:center;">
             <img src="https://i.postimg.cc/kMj5ffyz/Whats-App-Image-2025-07-02-a-05-55-51-f9e5b9e3.jpg" class="logo-small">
-            <span style="font-weight:900; color:var(--primary); margin-left:10px; font-size:14px;">SUPER CLEAN</span>
+            <span style="font-weight:900; color:var(--primary); margin-left:10px; font-size:14px;">SUPER CLEAN PRESSING</span>
         </div>
         <button onclick="toggleDarkMode()" style="background:none; border:none; font-size:20px; cursor:pointer;">🌙</button>
     </div>
@@ -319,7 +319,7 @@ function validerCommande() {
     enregistrerAction(`Nouvelle commande #${cmd.id} (${cmd.total}F)`);
 
     // Ticket & QR
-    const msgWA = `Bonjour SUPER CLEAN, suivi commande #${cmd.id} de ${cmd.client}`;
+    const msgWA = `Bonjour SUPER CLEAN PRESSING, suivi commande #${cmd.id} de ${cmd.client}`;
     document.getElementById('tk-qrcode').src = `https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=${encodeURIComponent('https://wa.me/237675864103?text='+msgWA)}`;
     document.getElementById('tk-body').innerHTML = `TICKET #${cmd.id} ${isEx ? '[⚡EXPRESS]':''}<br>CLIENT: ${cmd.client}<br>TEL: ${cmd.tel}<br>--------------------------------<br>${panier.map(a=>`${a.nom}: ${a.prix}F`).join('<br>')}<br>--------------------------------<br>TOTAL: ${cmd.total} F<br>PAYÉ (${cmd.mode}): ${cmd.paye} F<br><b>SOLDE: ${cmd.total-cmd.paye} F</b><br>RDV: ${cmd.retrait}`;
     
@@ -388,7 +388,7 @@ function genererRapportCloture() {
     const vJ = db.filter(c => new Date(c.time).toISOString().split('T')[0] === today);
     const al = stock.filter(p => p.qty <= p.seuil);
     const enc = vJ.reduce((a,b)=>a+b.paye, 0);
-    let msg = `*📊 RAPPORT CLÔTURE SUPER CLEAN*\n*Recette Cash:* ${enc} F\n*Commandes:* ${vJ.length}\n`;
+    let msg = `*📊 RAPPORT CLÔTURE SUPER CLEAN PRESSING*\n*Recette Cash:* ${enc} F\n*Commandes:* ${vJ.length}\n`;
     if(al.length > 0) { msg += `\n*⚠️ ALERTES STOCK :*\n`; al.forEach(p => msg += `- ${p.nom} : ${p.qty.toFixed(1)} ${p.unite}\n`); }
     window.open(`https://wa.me/237675864103?text=${encodeURIComponent(msg + "\n_Le bien-être de vos vêtements_")}`);
 }
