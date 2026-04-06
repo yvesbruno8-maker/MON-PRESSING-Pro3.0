@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SUPER CLEAN ERP v54.0 - CONFIGURATION FINALE</title>
+    <title>SUPER CLEAN ERP v55.0 - TEMPS RÉEL TOTAL</title>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -15,29 +15,28 @@
             --warning: #ff9f1c; --dark: #1b2631; --light: #f4f7f9; --white: #ffffff;
             --radius: 20px; --shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light); color: var(--dark); user-select: none; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light); color: var(--dark); user-select: none; -webkit-tap-highlight-color: transparent; }
         .hidden { display: none !important; }
         
-        /* --- HEADER --- */
-        .header { background: var(--white); padding: 20px; text-align: center; border-bottom: 4px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
+        /* --- UI DESIGN --- */
+        .header { background: var(--white); padding: 20px; text-align: center; border-bottom: 4px solid var(--primary); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .logo-main { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; }
         .brand-name { font-weight: 900; color: var(--primary); font-size: 24px; margin-top: 10px; text-transform: uppercase; }
         .official-slogan { font-size: 13px; color: #555; font-style: italic; font-weight: 700; }
 
-        /* --- NAVIGATION --- */
         .nav-bar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; padding: 12px; background: var(--white); position: fixed; bottom: 0; width: 100%; border-top: 1px solid #ddd; box-sizing: border-box; z-index: 2000; }
-        .nav-bar button { background: #f1f4f8; border: none; color: #7f8c8d; font-weight: 800; font-size: 7px; padding: 12px 1px; border-radius: 12px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .nav-bar button { background: #f1f4f8; border: none; color: #7f8c8d; font-weight: 800; font-size: 7px; padding: 12px 1px; border-radius: 12px; cursor: pointer; text-transform: uppercase; }
         .nav-bar button.active { background: var(--primary); color: var(--white); transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0, 86, 179, 0.4); }
 
-        /* --- UI COMPONENTS --- */
         .card { background: var(--white); margin: 15px; padding: 25px; border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid #eee; }
         h3 { margin-top: 0; font-size: 16px; color: var(--primary); font-weight: 900; text-transform: uppercase; border-bottom: 3px solid var(--light); padding-bottom: 12px; margin-bottom: 20px; }
-        input, select { background: #f1f4f8; border: 2px solid transparent; padding: 16px; border-radius: 15px; margin-bottom: 12px; width: 100%; box-sizing: border-box; font-size: 15px; outline: none; }
-        .btn-main { background: var(--primary); color: var(--white); border: none; padding: 20px; border-radius: 18px; font-weight: 900; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 14px; }
+        input, select { background: #f1f4f8; border: 2px solid transparent; padding: 16px; border-radius: 15px; margin-bottom: 12px; width: 100%; box-sizing: border-box; font-size: 15px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--primary); background: var(--white); }
+        .btn-main { background: var(--primary); color: var(--white); border: none; padding: 20px; border-radius: 18px; font-weight: 900; width: 100%; cursor: pointer; text-transform: uppercase; }
         
         .item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 15px; margin-bottom: 8px; border-left: 6px solid var(--primary); font-size: 14px; }
-        .solde-badge { background: var(--danger); color: white; padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: 900; }
-        .status-pill { padding: 5px 12px; border-radius: 50px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .solde-badge { background: var(--danger); color: white; padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: 900; display: inline-block; }
+        .status-pill { padding: 4px 10px; border-radius: 50px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
         .pill-active { background: #dcfce7; color: #166534; }
         .pill-blocked { background: #fee2e2; color: #991b1b; }
 
@@ -54,15 +53,15 @@
 
 <div id="auth-screen">
     <div style="height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, #00b4d8 100%);">
-        <div class="card" style="width: 90%; max-width: 400px; text-align: center; padding: 50px; border-radius: 30px;">
-            <img src="https://i.postimg.cc/kMj5ffyz/Whats-App-Image-2025-07-02-a-05-55-51-f9e5b9e3.jpg" class="logo-main" style="width:100px; height:100px; margin-bottom: 20px;">
+        <div class="card" style="width: 90%; max-width: 400px; text-align: center; padding: 50px;">
+            <img src="https://i.postimg.cc/kMj5ffyz/Whats-App-Image-2025-07-02-a-05-55-51-f9e5b9e3.jpg" class="logo-main">
             <h2>SUPER CLEAN</h2>
             <p style="font-size:12px; color:var(--primary); font-weight:800; margin-bottom:35px; text-transform:uppercase;">Le bien être de vos vêtements</p>
             <input type="text" id="u-login" placeholder="Identifiant">
             <input type="password" id="u-pass" placeholder="Mot de passe">
             <button onclick="login()" class="btn-main">CONNEXION</button>
             <div id="login-error" style="color:var(--danger); font-size:11px; margin-top:15px; font-weight:bold;"></div>
-            <p onclick="resetCloud()" style="font-size:9px; color:#aaa; margin-top:25px; cursor:pointer;">Réinitialiser l'URL Cloud</p>
+            <p onclick="resetConfig()" style="font-size:9px; color:#aaa; margin-top:25px; cursor:pointer;">Réinitialiser URL Cloud</p>
         </div>
     </div>
 </div>
@@ -88,7 +87,7 @@
                 <input type="date" id="date-retrait">
                 <div style="background:#f8f9fa; padding:20px; border-radius:18px; border:1px dashed #ddd; margin-top:10px;">
                     <select id="select-article" onchange="majPrixInitial()"></select>
-                    <input type="number" id="prix-final" placeholder="Prix">
+                    <input type="number" id="prix-final" placeholder="Prix ajusté">
                     <button onclick="ajouterAuPanier()" class="btn-main" style="background:var(--dark);">+ AJOUTER</button>
                 </div>
             </div>
@@ -101,8 +100,8 @@
             <div style="padding: 0 15px;"><button onclick="validerCommande()" class="btn-main" style="height:80px;">🖨️ VALIDER TICKET</button></div>
             
             <div class="card" style="border: 2px solid var(--danger);">
-                <h3>💸 DÉPENSE DE CAISSE</h3>
-                <input type="text" id="achat-motif" placeholder="Motif de l'achat">
+                <h3>💸 DÉPENSE</h3>
+                <input type="text" id="achat-motif" placeholder="Motif">
                 <input type="number" id="achat-montant" placeholder="Montant">
                 <button onclick="enregistrerAchat()" class="btn-main" style="background:var(--danger);">DÉDUIRE</button>
             </div>
@@ -123,9 +122,9 @@
 
         <div id="section-performance" class="tab-content hidden">
             <div class="card">
-                <h3>📈 ANALYSE PERFORMANCES</h3>
+                <h3>📈 ANALYSE PERF</h3>
                 <div id="perf-display"></div>
-                <div class="item-row" style="background:var(--success); color:white;"><span>RECETTE NETTE</span> <b id="p-net">0 F</b></div>
+                <div class="item-row" style="background:var(--success); color:white;"><span>NET GLOBAL</span> <b id="p-net">0 F</b></div>
             </div>
         </div>
 
@@ -136,7 +135,7 @@
                 <div id="admin-stock-control" class="hidden">
                     <hr>
                     <select id="upd-stock-item"></select>
-                    <input type="number" id="upd-stock-qte" placeholder="Quantité +/-">
+                    <input type="number" id="upd-stock-qte" placeholder="Quantité">
                     <button onclick="majStockManuel()" class="btn-main" style="background:var(--warning); color:black;">AJUSTER</button>
                 </div>
             </div>
@@ -144,7 +143,7 @@
 
         <div id="section-logs" class="tab-content hidden">
             <div class="card">
-                <h3>📜 JOURNAL D'ACTIVITÉS</h3>
+                <h3>📜 LOGS AUDIT</h3>
                 <div id="logs-container" style="max-height:450px; overflow-y:auto; font-size:10px; font-family:monospace;"></div>
             </div>
         </div>
@@ -153,10 +152,10 @@
             <div class="card" style="background: #fff3cd; border: 1px solid #ffeeba;">
                 <h3>⚙️ CONFIGURATION CLOUD</h3>
                 <input type="text" id="fb-url-config" placeholder="https://votre-projet.firebaseio.com">
-                <button onclick="saveFirebaseURL()" class="btn-main" style="background:var(--dark);">DÉPLOYER LE SDK</button>
+                <button onclick="saveFirebaseURL()" class="btn-main" style="background:var(--dark);">DÉPLOYER LA SYNCHRO</button>
             </div>
             <div class="card" style="border: 2px solid var(--primary);">
-                <h3>👑 PERSONNEL & CONTRÔLE D'ACCÈS</h3>
+                <h3>👑 PERSONNEL & ACCÈS</h3>
                 <div id="staff-list"></div>
                 <hr>
                 <h4>CRÉER UN COMPTE</h4>
@@ -171,8 +170,8 @@
                 <button onclick="ajouterEmploye()" class="btn-main" style="background:var(--success);">CRÉER ET ACTIVER</button>
             </div>
             <div class="card">
-                <h3>✨ AJOUTER ARTICLE À LA GRILLE</h3>
-                <input type="text" id="new-art-cat" placeholder="Catégorie (ex: ROBES)">
+                <h3>✨ AJOUTER ARTICLE GRILLE</h3>
+                <input type="text" id="new-art-cat" placeholder="Catégorie">
                 <input type="text" id="new-art-nom" placeholder="Désignation">
                 <input type="number" id="new-art-prix" placeholder="Prix standard">
                 <button onclick="ajouterNouveauProduit()" class="btn-main">ACTUALISER LA LISTE</button>
@@ -193,98 +192,74 @@
 
 <script>
 /* ==========================================
-   1. GRILLE TARIFAIRE INTÉGRALE DÉTAILLÉE
+   1. GRILLE TARIFAIRE INTÉGRALE
    ========================================== */
 const GRILLE_OFFICIELLE = {
-    "LES HAUTS": {
-        "T-Shirt": 500, "Chemise": 500, "Polo": 500, "Pull Over": 700, "Blouson": 1500,
-        "Démembré": 300, "Veste 2 pièces": 1500, "Veste 3 pièces": 2000,
-        "Pantalon simple": 500, "Pantalon jeans": 500, "Jupe simple": 500, "Jupe plissée": 1000
-    },
-    "ENSEMBLES": {
-        "Costume simple": 2000, "Costume de luxe": 2500, "Boubou femme": 1500,
-        "Boubou homme 2P": 1500, "Boubou homme 3P": 2500, "Jogging": 1500, "Pyjama": 1000
-    },
-    "LES ROBES": {
-        "Robe simple": 1000, "Robe de soirée": 3000, "Kaba court": 1000, "Kaba long": 1500, "Toge": 3500
-    },
-    "LINGES DE LIT": {
-        "1 Drap": 750, "Ensemble Draps": 2000, "Housse de couette": 2500, "Couette": 2000, "Couverture": 4000
-    },
-    "VÊTEMENTS ENFANTS": {
-        "Ensemble enfant": 1000, "Robe enfant": 500, "Haut enfant": 500, "Bas enfant": 500
-    },
-    "AMEUBLEMENT / BAIN": {
-        "Rideau lourd": 1500, "Rideau léger": 1000, "Petite Serviette": 500, "Grande Serviette": 1000, "Peignoir": 2000
-    },
+    "LES HAUTS": { "T-Shirt": 500, "Chemise": 500, "Polo": 500, "Pull Over": 700, "Blouson": 1500, "Démembré": 300, "Veste 2 pièces": 1500, "Veste 3 pièces": 2000, "Pantalon jeans": 500, "Jupe plissée": 1000 },
+    "ENSEMBLES": { "Costume luxe": 2500, "Boubou femme": 1500, "Boubou homme 3P": 2500, "Jogging": 1500, "Pyjama 2P": 1000 },
+    "LES ROBES": { "Robe simple": 1000, "Robe de soirée": 3000, "Kaba court": 1000, "Kaba long": 1500, "Toge": 3500 },
+    "LINGES DE LIT": { "1 Drap": 750, "Ensemble Draps": 2000, "Couverture": 4000, "Couette": 2000 },
+    "VÊTEMENTS ENFANTS": { "Ensemble enfant": 1000, "Robe enfant": 500 },
+    "AMEUBLEMENT / BAIN": { "Rideau lourd": 1500, "Serviette": 1000, "Peignoir": 2000 },
     "ACCESSOIRES": { "Tennis": 500, "Cravate": 500 }
 };
 
 /* ==========================================
-   2. CONFIGURATION ET ÉTATS SÉCURISÉS
+   2. CONFIGURATION & MOTEUR TEMPS RÉEL
    ========================================== */
-const MASTER_ADMIN = {nom: "Directeur Général", login: "admin", pass: "0000", role: "ADMIN", actif: true};
-let CLOUD_URL = localStorage.getItem('sc_fb_url_v54') || "";
+const MASTER_ADMIN = {nom: "Directeur", login: "admin", pass: "0000", role: "ADMIN", actif: true};
+let CLOUD_URL = localStorage.getItem('sc_fb_url_v55') || "";
+let GRILLE = GRILLE_OFFICIELLE;
 let dbRef = null;
 
-let GRILLE = GRILLE_OFFICIELLE;
-let orders = [], staff = [MASTER_ADMIN], stocks = [
-    {id:'savon', nom:'Savon Liquide', qte:100, unite:'L'},
-    {id:'housses', nom:'Housses Plastiques', qte:500, unite:'pcs'}
-], logs = [], achats = [];
+let orders = [], staff = [MASTER_ADMIN], stocks = [{id:'savon', nom:'Savon', qte:100, unite:'L'}, {id:'housses', nom:'Housses', qte:500, unite:'pcs'}], logs = [], achats = [];
 let currentUser = null, panier = [];
 
-// Initialisation SDK Firebase
+// Connexion SDK Firebase avec Ecouteur Temps Réel
 if(CLOUD_URL) {
     try {
         firebase.initializeApp({ databaseURL: CLOUD_URL });
         dbRef = firebase.database();
         document.getElementById('sync-status').className = "sync-tag online";
-        document.getElementById('sync-status').innerText = "SYNCHRO : ON";
+        document.getElementById('sync-status').innerText = "SYNCHRO : LIVE";
+        
+        // ECOUTEUR TEMPS REEL : Chaque changement sur le Cloud met à jour tous les téléphones
+        dbRef.ref('/').on('value', (snap) => {
+            const data = snap.val();
+            if(data) {
+                orders = data.orders || [];
+                staff = data.staff || [MASTER_ADMIN];
+                stocks = data.stocks || stocks;
+                logs = data.logs || [];
+                achats = data.achats || [];
+                if(data.GRILLE) GRILLE = data.GRILLE;
+                
+                // Rafraîchir l'écran actuel si l'utilisateur est connecté
+                if(currentUser) {
+                    renderAtelier();
+                    renderStocks();
+                    renderAdmin();
+                }
+            }
+        });
     } catch(e) { console.error("Firebase Init Fail"); }
 }
 
-async function pullData() {
-    if(!dbRef) return;
-    try {
-        const snap = await dbRef.ref('/').once('value');
-        const data = snap.val();
-        if(data) {
-            orders = data.orders || [];
-            staff = data.staff || [MASTER_ADMIN];
-            stocks = data.stocks || stocks;
-            logs = data.logs || [];
-            achats = data.achats || [];
-            if(data.GRILLE) GRILLE = data.GRILLE;
-        } else {
-            // Initialisation de la base si elle est vide
-            await dbRef.ref('staff').set([MASTER_ADMIN]);
-            await dbRef.ref('stocks').set(stocks);
-        }
-    } catch(e) { console.error("Cloud data pull failed"); }
-}
-
 /* ==========================================
-   3. SÉCURITÉ ET LOGIN
+   3. AUTHENTIFICATION & SÉCURITÉ
    ========================================== */
 async function login() {
     const errorEl = document.getElementById('login-error');
-    errorEl.innerText = "Chargement des données Cloud...";
-    
-    if(dbRef) await pullData();
+    errorEl.innerText = "Connexion...";
     
     const l = document.getElementById('u-login').value;
     const p = document.getElementById('u-pass').value;
     
-    // Priorité au compte gravé pour éviter d'être bloqué
-    let u = staff.find(x => x.login === l && x.pass === p);
-    if(!u && l === "admin" && p === "0000") u = MASTER_ADMIN;
+    // Vérification Maître d'abord
+    let u = (l === "admin" && p === "0000") ? MASTER_ADMIN : staff.find(x => x.login === l && x.pass === p);
     
     if(u) {
-        if(!u.actif && u.role !== "ADMIN") {
-            errorEl.innerText = "🚫 COMPTE BLOQUÉ PAR L'ADMIN.";
-            return;
-        }
+        if(!u.actif && u.role !== "ADMIN") return errorEl.innerText = "COMPTE BLOQUÉ !";
         currentUser = u;
         document.getElementById('auth-screen').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
@@ -292,10 +267,8 @@ async function login() {
         document.getElementById('u-role-top').innerText = u.role;
         document.getElementById('fb-url-config').value = CLOUD_URL;
         
-        filtrerRoles(); initDropdown(); renderStocks(); addLog("Connexion");
-    } else {
-        errorEl.innerText = "Identifiants incorrects.";
-    }
+        filtrerRoles(); initDropdown(); renderStocks();
+    } else errorEl.innerText = "Identifiants incorrects.";
 }
 
 function filtrerRoles() {
@@ -311,10 +284,10 @@ function filtrerRoles() {
 }
 
 /* ==========================================
-   4. LOGIQUE MÉTIER CAISSE
+   4. CAISSE & TECHNIQUE
    ========================================== */
 function initDropdown() {
-    const s = document.getElementById('select-article'); s.innerHTML = '<option value="">-- Sélectionner l\'article --</option>';
+    const s = document.getElementById('select-article'); s.innerHTML = '<option value="">-- Article --</option>';
     for(let c in GRILLE) {
         let g = document.createElement('optgroup'); g.label = c;
         for(let a in GRILLE[c]) { let o = document.createElement('option'); o.value = GRILLE[c][a]; o.innerText = a; g.appendChild(o); }
@@ -329,38 +302,31 @@ function ajouterAuPanier() {
     panier.push({ uid: Date.now(), nom: s.options[s.selectedIndex].text, prix: parseInt(p), pret: false });
     renderPanier();
 }
-
 function renderPanier() {
     const t = panier.reduce((a,b)=>a+b.prix, 0);
     document.getElementById('total-caisse').innerText = t + " F";
-    document.getElementById('panier-liste').innerHTML = panier.map((x,i)=>`<div class="item-row"><b>${x.nom}</b> <span>${x.prix} F <button onclick="panier.splice(${i},1);renderPanier()" style="color:red; border:none; background:none;">✕</button></span></div>`).join('');
+    document.getElementById('panier-liste').innerHTML = panier.map((x,i)=>`<div class="item-row"><b>${x.nom}</b> <span>${x.prix} F <button onclick="panier.splice(${i},1);renderPanier()">✕</button></span></div>`).join('');
     calculerReste();
 }
-
 function calculerReste() { const t = panier.reduce((a,b)=>a+b.prix, 0), p = parseInt(document.getElementById('paye-caisse').value) || 0; document.getElementById('reste-caisse').innerText = `Reste : ${t - p} F`; }
 
 async function validerCommande() {
     const nom = document.getElementById('client-nom').value;
-    if(!nom || panier.length === 0) return alert("Données Client Incomplètes.");
-    const cmd = { id: Math.floor(1000+Math.random()*8999), client: nom, tel: document.getElementById('tel-client').value, articles: [...panier], total: panier.reduce((a,b)=>a+b.prix,0), paye: parseInt(document.getElementById('paye-caisse').value)||0, retrait: document.getElementById('date-retrait').value, timestamp: new Date().getTime(), agent: currentUser.nom, statut: "En cours" };
+    if(!nom || panier.length === 0) return alert("Incomplet !");
+    const cmd = { id: Math.floor(1000+Math.random()*8999), client: nom, tel: document.getElementById('tel-client').value, articles: [...panier], total: panier.reduce((a,b)=>a+b.prix,0), paye: parseInt(document.getElementById('paye-caisse').value)||0, mode: document.getElementById('mode-pay').value, retrait: document.getElementById('date-retrait').value, timestamp: new Date().getTime(), agent: currentUser.nom, statut: "En cours" };
     orders.unshift(cmd);
     if(dbRef) await dbRef.ref('orders').set(orders);
-    addLog(`Encaissement ticket #${cmd.id}`);
     location.reload();
 }
 
-/* ==========================================
-   5. ZONE TECHNIQUE (SÉCURISÉE)
-   ========================================== */
 function renderAtelier() {
     const canSeeMoney = (currentUser.role === "ADMIN" || currentUser.role === "Caissière");
     document.getElementById('atelier-liste').innerHTML = orders.filter(c => c.statut !== "Livré").map(c => `
         <div class="card">
-            <b>TICKET #${c.id} - ${c.client}</b><br>
-            <small>RDV: ${c.retrait}</small><br>
+            <b>TICKET #${c.id} - ${c.client}</b><br><small>RDV: ${c.retrait}</small><br>
             ${canSeeMoney ? `<div class="solde-badge" style="margin-top:5px;">À PAYER: ${c.total-c.paye} F</div>` : ''}
             <div style="margin-top:10px;">
-                ${c.articles.map(a => `<div class="item-row"><span>${a.nom}</span> ${!a.pret ? `<button onclick="finirArt(${c.id}, ${a.uid})" style="background:var(--success); color:white; border:none; padding:8px 15px; border-radius:10px;">OK</button>` : `<b style="color:green;">PRÊT</b>`}</div>`).join('')}
+                ${c.articles.map(a => `<div class="item-row"><span>${a.nom}</span> ${!a.pret ? `<button onclick="finirArt(${c.id}, ${a.uid})" style="background:var(--success); color:white; border:none; padding:5px 12px; border-radius:8px;">OK</button>` : `<b style="color:green;">PRÊT</b>`}</div>`).join('')}
             </div>
             ${canSeeMoney ? `<button onclick="livrer(${c.id})" class="btn-main" style="background:var(--dark); margin-top:10px;">LIVRER</button>` : ''}
         </div>`).join('');
@@ -368,63 +334,44 @@ function renderAtelier() {
 
 async function finirArt(cid, auid) {
     const c = orders.find(x => x.id === cid); c.articles.find(a => a.uid === auid).pret = true;
-    if(dbRef) await dbRef.ref('orders').set(orders); renderAtelier();
+    if(dbRef) await dbRef.ref('orders').set(orders);
 }
 
 async function livrer(id) {
     const c = orders.find(x => x.id === id); c.statut = "Livré"; c.paye = c.total;
-    if(dbRef) await dbRef.ref('orders').set(orders); addLog(`Livraison Ticket #${id}`); renderAtelier();
+    if(dbRef) await dbRef.ref('orders').set(orders);
 }
 
 /* ==========================================
-   6. GESTION DES STOCKS & ADMIN
+   5. ADMIN & SYSTEM
    ========================================== */
-function renderStocks() {
-    document.getElementById('stock-display').innerHTML = stocks.map(s => `<div class="item-row"><span>${s.nom}</span> <b>${s.qte} ${s.unite}</b></div>`).join('');
-}
-
-async function majStockManuel() {
-    const id = document.getElementById('upd-stock-item').value, q = parseFloat(document.getElementById('upd-stock-qte').value);
-    stocks.find(x => x.id === id).qte += q;
-    if(dbRef) await dbRef.ref('stocks').set(stocks); renderStocks();
-}
+function renderStocks() { document.getElementById('stock-display').innerHTML = stocks.map(s => `<div class="item-row"><span>${s.nom}</span> <b>${s.qte} ${s.unite}</b></div>`).join(''); }
+async function majStockManuel() { const i=document.getElementById('upd-stock-item').value, q=parseFloat(document.getElementById('upd-stock-qte').value); stocks.find(x=>x.id===i).qte+=q; if(dbRef) await dbRef.ref('stocks').set(stocks); }
 
 function renderAdmin() {
-    document.getElementById('staff-list').innerHTML = staff.map((s,i) => `<div class="item-row"><span><b>${s.nom}</b> (${s.role}) <span class="status-pill ${s.actif?'pill-active':'pill-blocked'}">${s.actif?'Actif':'Bloc'}</span></span> ${i!==0?`<button onclick="toggleUser(${i})">BASCULER</button>`:''}</div>`).join('');
+    document.getElementById('staff-list').innerHTML = staff.map((s,i) => `<div class="item-row"><span><b>${s.nom}</b> (${s.role}) <span class="status-pill ${s.actif?'pill-active':'pill-blocked'}">${s.actif?'Actif':'Bloqué'}</span></span> ${i!==0?`<button onclick="toggleUser(${i})">BASCULER</button>`:''}</div>`).join('');
 }
-
-async function toggleUser(i) {
-    staff[i].actif = !staff[i].actif;
-    if(dbRef) await dbRef.ref('staff').set(staff); renderAdmin();
-}
+async function toggleUser(i) { staff[i].actif = !staff[i].actif; if(dbRef) await dbRef.ref('staff').set(staff); }
 
 async function ajouterEmploye() {
     const n=document.getElementById('ns-nom').value, l=document.getElementById('ns-log').value, p=document.getElementById('ns-pass').value, r=document.getElementById('ns-role').value;
-    if(n&&l&&p) { staff.push({nom:n, login:l, pass:p, role:r, actif:true}); if(dbRef) await dbRef.ref('staff').set(staff); renderAdmin(); }
+    if(n&&l&&p) { staff.push({nom:n, login:l, pass:p, role:r, actif:true}); if(dbRef) await dbRef.ref('staff').set(staff); }
 }
 
 async function ajouterNouveauProduit() {
     const c=document.getElementById('new-art-cat').value.toUpperCase(), n=document.getElementById('new-art-nom').value, p=parseInt(document.getElementById('new-art-prix').value);
-    if(c&&n&&p) { if(!GRILLE[c]) GRILLE[c]={}; GRILLE[c][n]=p; if(dbRef) await dbRef.ref('GRILLE').set(GRILLE); initDropdown(); alert("Article ajouté !"); }
+    if(c&&n&&p) { if(!GRILLE[c]) GRILLE[c]={}; GRILLE[c][n]=p; if(dbRef) await dbRef.ref('GRILLE').set(GRILLE); }
 }
 
-/* ==========================================
-   7. NAVIGATION ET SYSTEME
-   ========================================== */
+function saveFirebaseURL() { localStorage.setItem('sc_fb_url_v55', document.getElementById('fb-url-config').value); location.reload(); }
+function resetConfig() { localStorage.removeItem('sc_fb_url_v55'); location.reload(); }
+
 function tab(id) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
     document.querySelectorAll('.nav-bar button').forEach(b => b.classList.remove('active'));
     document.getElementById(id).classList.remove('hidden');
     const btn = document.getElementById('btn-' + id.split('-')[1]); if(btn) btn.classList.add('active');
-    if(id==='section-atelier') renderAtelier();
-    if(id==='section-admin') renderAdmin();
-    if(id==='section-stocks') renderStocks();
-    if(id==='section-logs') document.getElementById('logs-container').innerHTML = logs.map(l => `<div style="font-size:10px; padding:5px; border-bottom:1px solid #eee;">${l}</div>`).join('');
 }
-
-function addLog(a) { logs.unshift(`[${new Date().toLocaleString()}] ${currentUser.nom}: ${a}`); if(dbRef) dbRef.ref('logs').set(logs.slice(0,100)); }
-function saveFirebaseURL() { localStorage.setItem('sc_fb_url_v54', document.getElementById('fb-url-config').value); location.reload(); }
-function resetCloud() { localStorage.removeItem('sc_fb_url_v54'); location.reload(); }
 function majPrixInitial() { document.getElementById('prix-final').value = document.getElementById('select-article').value; }
 function rechercherClient() { const t=document.getElementById('tel-client').value; if(t.length>=8){ const f=orders.find(x=>x.tel&&x.tel.includes(t)); if(f) document.getElementById('client-nom').value=f.client; } }
 </script>
