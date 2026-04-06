@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SUPER CLEAN ERP v53.0 - RÉCUPÉRATION TOTALE</title>
+    <title>SUPER CLEAN ERP v54.0 - CONFIGURATION FINALE</title>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -19,13 +18,9 @@
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light); color: var(--dark); user-select: none; }
         .hidden { display: none !important; }
         
-        /* --- DESIGN DU LOGIN --- */
-        #auth-screen { height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, #00b4d8 100%); }
-        .login-card { background: var(--white); width: 90%; max-width: 400px; text-align: center; padding: 50px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
-        .logo-login { width: 100px; height: 100px; border-radius: 50%; border: 5px solid var(--light); margin-bottom: 20px; object-fit: cover; }
-        
         /* --- HEADER --- */
         .header { background: var(--white); padding: 20px; text-align: center; border-bottom: 4px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
+        .logo-main { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; }
         .brand-name { font-weight: 900; color: var(--primary); font-size: 24px; margin-top: 10px; text-transform: uppercase; }
         .official-slogan { font-size: 13px; color: #555; font-style: italic; font-weight: 700; }
 
@@ -41,7 +36,8 @@
         .btn-main { background: var(--primary); color: var(--white); border: none; padding: 20px; border-radius: 18px; font-weight: 900; width: 100%; cursor: pointer; text-transform: uppercase; font-size: 14px; }
         
         .item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f8f9fa; border-radius: 15px; margin-bottom: 8px; border-left: 6px solid var(--primary); font-size: 14px; }
-        .status-pill { padding: 4px 10px; border-radius: 50px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .solde-badge { background: var(--danger); color: white; padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: 900; }
+        .status-pill { padding: 5px 12px; border-radius: 50px; font-size: 10px; font-weight: 900; text-transform: uppercase; }
         .pill-active { background: #dcfce7; color: #166534; }
         .pill-blocked { background: #fee2e2; color: #991b1b; }
 
@@ -54,25 +50,27 @@
 </head>
 <body>
 
-<div id="sync-status" class="sync-tag offline">INITIALISATION...</div>
+<div id="sync-status" class="sync-tag offline">SYNC : OFF</div>
 
 <div id="auth-screen">
-    <div class="login-card">
-        <img src="https://i.postimg.cc/kMj5ffyz/Whats-App-Image-2025-07-02-a-05-55-51-f9e5b9e3.jpg" class="logo-login">
-        <h2>SUPER CLEAN</h2>
-        <p style="font-size:12px; color:var(--primary); font-weight:800; margin-bottom:35px; text-transform:uppercase;">Le bien être de vos vêtements</p>
-        <input type="text" id="u-login" placeholder="Identifiant">
-        <input type="password" id="u-pass" placeholder="Mot de passe">
-        <button onclick="login()" class="btn-main">OUVRIR LA SESSION</button>
-        <div id="login-error" style="color:var(--danger); font-size:11px; margin-top:15px; font-weight:bold;"></div>
-        <p onclick="forcerResetConfig()" style="font-size:9px; color:#aaa; margin-top:25px; cursor:pointer; text-decoration:underline;">Réinitialiser la configuration Cloud</p>
+    <div style="height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, #00b4d8 100%);">
+        <div class="card" style="width: 90%; max-width: 400px; text-align: center; padding: 50px; border-radius: 30px;">
+            <img src="https://i.postimg.cc/kMj5ffyz/Whats-App-Image-2025-07-02-a-05-55-51-f9e5b9e3.jpg" class="logo-main" style="width:100px; height:100px; margin-bottom: 20px;">
+            <h2>SUPER CLEAN</h2>
+            <p style="font-size:12px; color:var(--primary); font-weight:800; margin-bottom:35px; text-transform:uppercase;">Le bien être de vos vêtements</p>
+            <input type="text" id="u-login" placeholder="Identifiant">
+            <input type="password" id="u-pass" placeholder="Mot de passe">
+            <button onclick="login()" class="btn-main">CONNEXION</button>
+            <div id="login-error" style="color:var(--danger); font-size:11px; margin-top:15px; font-weight:bold;"></div>
+            <p onclick="resetCloud()" style="font-size:9px; color:#aaa; margin-top:25px; cursor:pointer;">Réinitialiser l'URL Cloud</p>
+        </div>
     </div>
 </div>
 
 <div id="app" class="hidden">
     <div style="background: var(--dark); color: white; padding: 10px 20px; font-size: 11px; display: flex; justify-content: space-between; align-items: center;">
-        <span>👤 CONNECTÉ : <b id="u-name-top"></b></span>
-        <button onclick="location.reload()" style="background:var(--danger); color:white; border:none; padding:6px 12px; border-radius:8px; font-size:10px; cursor:pointer;">DÉCONNEXION</button>
+        <span>👤 SESSION : <b id="u-name-top"></b> (<span id="u-role-top"></span>)</span>
+        <button onclick="location.reload()" style="background:var(--danger); border:none; color:white; padding:6px 12px; border-radius:8px; font-size:10px; cursor:pointer;">SORTIR</button>
     </div>
 
     <div class="header">
@@ -90,7 +88,7 @@
                 <input type="date" id="date-retrait">
                 <div style="background:#f8f9fa; padding:20px; border-radius:18px; border:1px dashed #ddd; margin-top:10px;">
                     <select id="select-article" onchange="majPrixInitial()"></select>
-                    <input type="number" id="prix-final" placeholder="Prix ajusté">
+                    <input type="number" id="prix-final" placeholder="Prix">
                     <button onclick="ajouterAuPanier()" class="btn-main" style="background:var(--dark);">+ AJOUTER</button>
                 </div>
             </div>
@@ -101,6 +99,13 @@
                 <div id="reste-caisse" style="text-align:right; font-weight:900; color:var(--warning);">Reste : 0 F</div>
             </div>
             <div style="padding: 0 15px;"><button onclick="validerCommande()" class="btn-main" style="height:80px;">🖨️ VALIDER TICKET</button></div>
+            
+            <div class="card" style="border: 2px solid var(--danger);">
+                <h3>💸 DÉPENSE DE CAISSE</h3>
+                <input type="text" id="achat-motif" placeholder="Motif de l'achat">
+                <input type="number" id="achat-montant" placeholder="Montant">
+                <button onclick="enregistrerAchat()" class="btn-main" style="background:var(--danger);">DÉDUIRE</button>
+            </div>
         </div>
 
         <div id="section-atelier" class="tab-content hidden">
@@ -112,7 +117,7 @@
             <div class="card">
                 <h3>📊 BILAN JOURNALIER</h3>
                 <div id="rapport-details"></div>
-                <button onclick="envoyerRapportWA()" class="btn-wa" style="height:70px; margin-top:20px;">📲 ENVOYER AU PATRON</button>
+                <button onclick="envoyerRapportWA()" class="btn-main" style="background:#25D366; margin-top:20px;">📲 ENVOYER AU PATRON</button>
             </div>
         </div>
 
@@ -131,8 +136,8 @@
                 <div id="admin-stock-control" class="hidden">
                     <hr>
                     <select id="upd-stock-item"></select>
-                    <input type="number" id="upd-stock-qte" placeholder="Qté +/-">
-                    <button onclick="majStockManuel()" class="btn-main" style="background:var(--warning); color:black;">METTRE À JOUR</button>
+                    <input type="number" id="upd-stock-qte" placeholder="Quantité +/-">
+                    <button onclick="majStockManuel()" class="btn-main" style="background:var(--warning); color:black;">AJUSTER</button>
                 </div>
             </div>
         </div>
@@ -140,7 +145,7 @@
         <div id="section-logs" class="tab-content hidden">
             <div class="card">
                 <h3>📜 JOURNAL D'ACTIVITÉS</h3>
-                <div id="logs-container" style="max-height:450px; overflow-y:auto; font-size:10px;"></div>
+                <div id="logs-container" style="max-height:450px; overflow-y:auto; font-size:10px; font-family:monospace;"></div>
             </div>
         </div>
 
@@ -167,7 +172,7 @@
             </div>
             <div class="card">
                 <h3>✨ AJOUTER ARTICLE À LA GRILLE</h3>
-                <input type="text" id="new-art-cat" placeholder="Catégorie">
+                <input type="text" id="new-art-cat" placeholder="Catégorie (ex: ROBES)">
                 <input type="text" id="new-art-nom" placeholder="Désignation">
                 <input type="number" id="new-art-prix" placeholder="Prix standard">
                 <button onclick="ajouterNouveauProduit()" class="btn-main">ACTUALISER LA LISTE</button>
@@ -187,36 +192,56 @@
 </div>
 
 <script>
-/* ==========================================================================
-   CONFIG & SÉCURITÉ MAÎTRE
-   ========================================================================== */
-const MASTER_ADMIN = {nom: "Maître de session", login: "admin", pass: "0000", role: "ADMIN", actif: true};
-let CLOUD_URL = localStorage.getItem('sc_fb_url_v53') || "";
-let dbRef = null;
-
-// Grille complète sans simplification
+/* ==========================================
+   1. GRILLE TARIFAIRE INTÉGRALE DÉTAILLÉE
+   ========================================== */
 const GRILLE_OFFICIELLE = {
-    "LES HAUTS": { "T-Shirt": 500, "Chemise": 500, "Polo": 500, "Pull Over": 700, "Blouson": 1500, "Veste 2P": 1500, "Veste 3P": 2000, "Pantalon jeans": 500, "Jupe simple": 500, "Jupe plissée": 1000 },
-    "ENSEMBLES": { "Costume simple": 2000, "Costume de luxe": 2500, "Boubou femme": 1500, "Boubou homme 3P": 2500, "Jogging": 1500, "Pyjama 2P": 1000 },
-    "LES ROBES": { "Robe simple": 1000, "Robe de soirée": 3000, "Kaba court": 1000, "Kaba long": 1500, "Toge": 3500 },
-    "LINGES DE LIT": { "1 Drap": 750, "Ensemble Draps": 2000, "Couverture": 4000, "Couette": 2000 },
-    "VÊTEMENTS ENFANTS": { "Ensemble enfant": 1000, "Robe enfant": 500 },
-    "AMEUBLEMENT": { "Rideau lourd": 1500, "Serviette": 1000, "Peignoir": 2000 },
+    "LES HAUTS": {
+        "T-Shirt": 500, "Chemise": 500, "Polo": 500, "Pull Over": 700, "Blouson": 1500,
+        "Démembré": 300, "Veste 2 pièces": 1500, "Veste 3 pièces": 2000,
+        "Pantalon simple": 500, "Pantalon jeans": 500, "Jupe simple": 500, "Jupe plissée": 1000
+    },
+    "ENSEMBLES": {
+        "Costume simple": 2000, "Costume de luxe": 2500, "Boubou femme": 1500,
+        "Boubou homme 2P": 1500, "Boubou homme 3P": 2500, "Jogging": 1500, "Pyjama": 1000
+    },
+    "LES ROBES": {
+        "Robe simple": 1000, "Robe de soirée": 3000, "Kaba court": 1000, "Kaba long": 1500, "Toge": 3500
+    },
+    "LINGES DE LIT": {
+        "1 Drap": 750, "Ensemble Draps": 2000, "Housse de couette": 2500, "Couette": 2000, "Couverture": 4000
+    },
+    "VÊTEMENTS ENFANTS": {
+        "Ensemble enfant": 1000, "Robe enfant": 500, "Haut enfant": 500, "Bas enfant": 500
+    },
+    "AMEUBLEMENT / BAIN": {
+        "Rideau lourd": 1500, "Rideau léger": 1000, "Petite Serviette": 500, "Grande Serviette": 1000, "Peignoir": 2000
+    },
     "ACCESSOIRES": { "Tennis": 500, "Cravate": 500 }
 };
 
+/* ==========================================
+   2. CONFIGURATION ET ÉTATS SÉCURISÉS
+   ========================================== */
+const MASTER_ADMIN = {nom: "Directeur Général", login: "admin", pass: "0000", role: "ADMIN", actif: true};
+let CLOUD_URL = localStorage.getItem('sc_fb_url_v54') || "";
+let dbRef = null;
+
 let GRILLE = GRILLE_OFFICIELLE;
-let orders = [], staff = [MASTER_ADMIN], stocks = [{id:'savon', nom:'Savon Liquide', qte:100, unite:'L'}], logs = [], achats = [];
+let orders = [], staff = [MASTER_ADMIN], stocks = [
+    {id:'savon', nom:'Savon Liquide', qte:100, unite:'L'},
+    {id:'housses', nom:'Housses Plastiques', qte:500, unite:'pcs'}
+], logs = [], achats = [];
 let currentUser = null, panier = [];
 
-// Initialisation SDK
+// Initialisation SDK Firebase
 if(CLOUD_URL) {
     try {
         firebase.initializeApp({ databaseURL: CLOUD_URL });
         dbRef = firebase.database();
         document.getElementById('sync-status').className = "sync-tag online";
-        document.getElementById('sync-status').innerText = "CLOUD : ACTIF";
-    } catch(e) { console.error("Firebase Init Error"); }
+        document.getElementById('sync-status').innerText = "SYNCHRO : ON";
+    } catch(e) { console.error("Firebase Init Fail"); }
 }
 
 async function pullData() {
@@ -232,50 +257,42 @@ async function pullData() {
             achats = data.achats || [];
             if(data.GRILLE) GRILLE = data.GRILLE;
         } else {
-            // Si la base Cloud est vide, on injecte l'admin maître
+            // Initialisation de la base si elle est vide
             await dbRef.ref('staff').set([MASTER_ADMIN]);
             await dbRef.ref('stocks').set(stocks);
         }
-    } catch(e) { console.error("Pull error"); }
+    } catch(e) { console.error("Cloud data pull failed"); }
 }
 
-/* ==========================================================================
-   MOTEUR DE CONNEXION (SÉCURITÉ ANTI-BLOCAGE)
-   ========================================================================== */
+/* ==========================================
+   3. SÉCURITÉ ET LOGIN
+   ========================================== */
 async function login() {
     const errorEl = document.getElementById('login-error');
-    errorEl.innerText = "Synchronisation Cloud...";
+    errorEl.innerText = "Chargement des données Cloud...";
     
-    // Essai de pull Cloud
     if(dbRef) await pullData();
     
     const l = document.getElementById('u-login').value;
     const p = document.getElementById('u-pass').value;
     
-    // Vérification : 1. Cloud / 2. Secours local si vide
-    let userFound = staff.find(x => x.login === l && x.pass === p);
+    // Priorité au compte gravé pour éviter d'être bloqué
+    let u = staff.find(x => x.login === l && x.pass === p);
+    if(!u && l === "admin" && p === "0000") u = MASTER_ADMIN;
     
-    // FORÇAGE MAITRE : Si c'est admin/0000, on laisse entrer quoi qu'il arrive
-    if(!userFound && l === MASTER_ADMIN.login && p === MASTER_ADMIN.pass) {
-        userFound = MASTER_ADMIN;
-    }
-    
-    if(userFound) {
-        if(!userFound.actif && userFound.role !== "ADMIN") {
-            errorEl.innerText = "🚫 COMPTE BLOQUÉ !";
+    if(u) {
+        if(!u.actif && u.role !== "ADMIN") {
+            errorEl.innerText = "🚫 COMPTE BLOQUÉ PAR L'ADMIN.";
             return;
         }
-        currentUser = userFound;
+        currentUser = u;
         document.getElementById('auth-screen').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
-        document.getElementById('u-name-top').innerText = userFound.nom;
-        document.getElementById('u-role-top').innerText = userFound.role;
+        document.getElementById('u-name-top').innerText = u.nom;
+        document.getElementById('u-role-top').innerText = u.role;
         document.getElementById('fb-url-config').value = CLOUD_URL;
         
-        filtrerRoles(); 
-        initDropdown(); 
-        renderStocks();
-        addLog("Connexion session");
+        filtrerRoles(); initDropdown(); renderStocks(); addLog("Connexion");
     } else {
         errorEl.innerText = "Identifiants incorrects.";
     }
@@ -293,11 +310,11 @@ function filtrerRoles() {
     tab(isCaisse ? 'section-caisse' : 'section-atelier');
 }
 
-/* ==========================================================================
-   LOGIQUE MÉTIER & TECHNIQUE
-   ========================================================================== */
+/* ==========================================
+   4. LOGIQUE MÉTIER CAISSE
+   ========================================== */
 function initDropdown() {
-    const s = document.getElementById('select-article'); s.innerHTML = '<option value="">-- Sélectionner --</option>';
+    const s = document.getElementById('select-article'); s.innerHTML = '<option value="">-- Sélectionner l\'article --</option>';
     for(let c in GRILLE) {
         let g = document.createElement('optgroup'); g.label = c;
         for(let a in GRILLE[c]) { let o = document.createElement('option'); o.value = GRILLE[c][a]; o.innerText = a; g.appendChild(o); }
@@ -312,33 +329,40 @@ function ajouterAuPanier() {
     panier.push({ uid: Date.now(), nom: s.options[s.selectedIndex].text, prix: parseInt(p), pret: false });
     renderPanier();
 }
+
 function renderPanier() {
     const t = panier.reduce((a,b)=>a+b.prix, 0);
     document.getElementById('total-caisse').innerText = t + " F";
-    document.getElementById('panier-liste').innerHTML = panier.map((x,i)=>`<div class="item-row"><b>${x.nom}</b> <span>${x.prix} F <button onclick="panier.splice(${i},1);renderPanier()">✕</button></span></div>`).join('');
+    document.getElementById('panier-liste').innerHTML = panier.map((x,i)=>`<div class="item-row"><b>${x.nom}</b> <span>${x.prix} F <button onclick="panier.splice(${i},1);renderPanier()" style="color:red; border:none; background:none;">✕</button></span></div>`).join('');
+    calculerReste();
 }
+
 function calculerReste() { const t = panier.reduce((a,b)=>a+b.prix, 0), p = parseInt(document.getElementById('paye-caisse').value) || 0; document.getElementById('reste-caisse').innerText = `Reste : ${t - p} F`; }
 
 async function validerCommande() {
     const nom = document.getElementById('client-nom').value;
-    if(!nom || panier.length === 0) return alert("Incomplet !");
+    if(!nom || panier.length === 0) return alert("Données Client Incomplètes.");
     const cmd = { id: Math.floor(1000+Math.random()*8999), client: nom, tel: document.getElementById('tel-client').value, articles: [...panier], total: panier.reduce((a,b)=>a+b.prix,0), paye: parseInt(document.getElementById('paye-caisse').value)||0, retrait: document.getElementById('date-retrait').value, timestamp: new Date().getTime(), agent: currentUser.nom, statut: "En cours" };
     orders.unshift(cmd);
     if(dbRef) await dbRef.ref('orders').set(orders);
+    addLog(`Encaissement ticket #${cmd.id}`);
     location.reload();
 }
 
+/* ==========================================
+   5. ZONE TECHNIQUE (SÉCURISÉE)
+   ========================================== */
 function renderAtelier() {
     const canSeeMoney = (currentUser.role === "ADMIN" || currentUser.role === "Caissière");
     document.getElementById('atelier-liste').innerHTML = orders.filter(c => c.statut !== "Livré").map(c => `
         <div class="card">
             <b>TICKET #${c.id} - ${c.client}</b><br>
             <small>RDV: ${c.retrait}</small><br>
-            ${canSeeMoney ? `<div class="solde-badge" style="margin-top:5px;">SOLDE: ${c.total-c.paye} F</div>` : ''}
+            ${canSeeMoney ? `<div class="solde-badge" style="margin-top:5px;">À PAYER: ${c.total-c.paye} F</div>` : ''}
             <div style="margin-top:10px;">
-                ${c.articles.map(a => `<div class="item-row"><span>${a.nom}</span> ${!a.pret ? `<button onclick="finirArt(${c.id}, ${a.uid})" style="background:var(--success); color:white; border:none; padding:5px 15px; border-radius:10px;">OK</button>` : `<b style="color:green;">PRÊT</b>`}</div>`).join('')}
+                ${c.articles.map(a => `<div class="item-row"><span>${a.nom}</span> ${!a.pret ? `<button onclick="finirArt(${c.id}, ${a.uid})" style="background:var(--success); color:white; border:none; padding:8px 15px; border-radius:10px;">OK</button>` : `<b style="color:green;">PRÊT</b>`}</div>`).join('')}
             </div>
-            ${canSeeMoney ? `<button onclick="livrer(${c.id})" class="btn-main" style="background:var(--dark); margin-top:10px;">LIVRER ET FERMER</button>` : ''}
+            ${canSeeMoney ? `<button onclick="livrer(${c.id})" class="btn-main" style="background:var(--dark); margin-top:10px;">LIVRER</button>` : ''}
         </div>`).join('');
 }
 
@@ -349,19 +373,26 @@ async function finirArt(cid, auid) {
 
 async function livrer(id) {
     const c = orders.find(x => x.id === id); c.statut = "Livré"; c.paye = c.total;
-    if(dbRef) await dbRef.ref('orders').set(orders); renderAtelier();
+    if(dbRef) await dbRef.ref('orders').set(orders); addLog(`Livraison Ticket #${id}`); renderAtelier();
 }
 
-/* ==========================================================================
-   ADMINISTRATION & CONFIG
-   ========================================================================== */
-function renderAdmin() {
-    document.getElementById('staff-list').innerHTML = staff.map((s,i) => `
-        <div class="item-row" style="background:${s.actif?'':'#fff1f2'}">
-            <span><b>${s.nom}</b> (${s.role}) <span class="status-pill ${s.actif?'pill-active':'pill-blocked'}">${s.actif?'ACTIF':'BLOQUÉ'}</span></span>
-            ${i!==0?`<button onclick="toggleUser(${i})">BASCULER ACCÈS</button>`:''}
-        </div>`).join('');
+/* ==========================================
+   6. GESTION DES STOCKS & ADMIN
+   ========================================== */
+function renderStocks() {
+    document.getElementById('stock-display').innerHTML = stocks.map(s => `<div class="item-row"><span>${s.nom}</span> <b>${s.qte} ${s.unite}</b></div>`).join('');
 }
+
+async function majStockManuel() {
+    const id = document.getElementById('upd-stock-item').value, q = parseFloat(document.getElementById('upd-stock-qte').value);
+    stocks.find(x => x.id === id).qte += q;
+    if(dbRef) await dbRef.ref('stocks').set(stocks); renderStocks();
+}
+
+function renderAdmin() {
+    document.getElementById('staff-list').innerHTML = staff.map((s,i) => `<div class="item-row"><span><b>${s.nom}</b> (${s.role}) <span class="status-pill ${s.actif?'pill-active':'pill-blocked'}">${s.actif?'Actif':'Bloc'}</span></span> ${i!==0?`<button onclick="toggleUser(${i})">BASCULER</button>`:''}</div>`).join('');
+}
+
 async function toggleUser(i) {
     staff[i].actif = !staff[i].actif;
     if(dbRef) await dbRef.ref('staff').set(staff); renderAdmin();
@@ -372,9 +403,14 @@ async function ajouterEmploye() {
     if(n&&l&&p) { staff.push({nom:n, login:l, pass:p, role:r, actif:true}); if(dbRef) await dbRef.ref('staff').set(staff); renderAdmin(); }
 }
 
-function saveFirebaseURL() { localStorage.setItem('sc_fb_url_v53', document.getElementById('fb-url-config').value); location.reload(); }
-function forcerResetConfig() { localStorage.removeItem('sc_fb_url_v53'); location.reload(); }
+async function ajouterNouveauProduit() {
+    const c=document.getElementById('new-art-cat').value.toUpperCase(), n=document.getElementById('new-art-nom').value, p=parseInt(document.getElementById('new-art-prix').value);
+    if(c&&n&&p) { if(!GRILLE[c]) GRILLE[c]={}; GRILLE[c][n]=p; if(dbRef) await dbRef.ref('GRILLE').set(GRILLE); initDropdown(); alert("Article ajouté !"); }
+}
 
+/* ==========================================
+   7. NAVIGATION ET SYSTEME
+   ========================================== */
 function tab(id) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
     document.querySelectorAll('.nav-bar button').forEach(b => b.classList.remove('active'));
@@ -383,11 +419,12 @@ function tab(id) {
     if(id==='section-atelier') renderAtelier();
     if(id==='section-admin') renderAdmin();
     if(id==='section-stocks') renderStocks();
+    if(id==='section-logs') document.getElementById('logs-container').innerHTML = logs.map(l => `<div style="font-size:10px; padding:5px; border-bottom:1px solid #eee;">${l}</div>`).join('');
 }
 
 function addLog(a) { logs.unshift(`[${new Date().toLocaleString()}] ${currentUser.nom}: ${a}`); if(dbRef) dbRef.ref('logs').set(logs.slice(0,100)); }
-function renderStocks() { document.getElementById('stock-display').innerHTML = stocks.map(s => `<div class="item-row"><span>${s.nom}</span> <b>${s.qte} ${s.unite}</b></div>`).join(''); }
-async function majStockManuel() { const i=document.getElementById('upd-stock-item').value, q=parseFloat(document.getElementById('upd-stock-qte').value); stocks.find(x=>x.id===i).qte+=q; if(dbRef) await dbRef.ref('stocks').set(stocks); renderStocks(); }
+function saveFirebaseURL() { localStorage.setItem('sc_fb_url_v54', document.getElementById('fb-url-config').value); location.reload(); }
+function resetCloud() { localStorage.removeItem('sc_fb_url_v54'); location.reload(); }
 function majPrixInitial() { document.getElementById('prix-final').value = document.getElementById('select-article').value; }
 function rechercherClient() { const t=document.getElementById('tel-client').value; if(t.length>=8){ const f=orders.find(x=>x.tel&&x.tel.includes(t)); if(f) document.getElementById('client-nom').value=f.client; } }
 </script>
