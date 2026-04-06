@@ -2,22 +2,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SUPER CLEAN ERP v49.0 - SYSTÈME INTÉGRAL SÉCURISÉ</title>
+    <title>SUPER CLEAN ERP v50.0 - VERSION FINALE INTÉGRALE</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ==========================================================================
-           1. CHARTE GRAPHIQUE COMPLÈTE
-           ========================================================================== */
         :root { 
             --primary: #0056b3; --primary-dark: #003d7a; --success: #2ecc71; 
             --danger: #ef233c; --warning: #ff9f1c; --dark: #1b2631; 
             --light: #f4f7f9; --white: #ffffff; --radius: 20px;
         }
-
         body { font-family: 'Inter', sans-serif; margin: 0; background-color: var(--light); color: var(--dark); user-select: none; -webkit-tap-highlight-color: transparent; }
         .hidden { display: none !important; }
         
-        /* --- HEADER & IDENTITÉ --- */
+        /* --- HEADER & BRANDING --- */
         .header { background: var(--white); padding: 20px; text-align: center; border-bottom: 4px solid var(--primary); position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .logo-main { width: 85px; height: 85px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; }
         .brand-name { font-weight: 900; color: var(--primary); font-size: 24px; margin-top: 10px; text-transform: uppercase; letter-spacing: -1px; }
@@ -43,8 +39,7 @@
         .pill-active { background: #dcfce7; color: #166534; }
         .pill-blocked { background: #fee2e2; color: #991b1b; }
 
-        /* --- SYNC TAG --- */
-        .sync-tag { position: fixed; top: 10px; right: 10px; font-size: 9px; padding: 5px 10px; border-radius: 10px; z-index: 3000; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: 0.5s; }
+        .sync-tag { position: fixed; top: 10px; right: 10px; font-size: 9px; padding: 5px 10px; border-radius: 10px; z-index: 3000; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .online { background: var(--success); color: white; }
         .offline { background: var(--danger); color: white; }
 
@@ -53,7 +48,7 @@
 </head>
 <body>
 
-<div id="sync-status" class="sync-tag offline">INITIALISATION SYSTÈME...</div>
+<div id="sync-status" class="sync-tag offline">LANCEMENT...</div>
 
 <div id="auth-screen">
     <div style="height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary) 0%, #00b4d8 100%);">
@@ -70,8 +65,8 @@
 </div>
 
 <div id="app" class="hidden">
-    <div style="background: var(--dark); color: white; padding: 10px 20px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; font-weight: 600;">
-        <span>👤 SESSION : <b id="u-name-top"></b> (<span id="u-role-top"></span>)</span>
+    <div style="background: var(--dark); color: white; padding: 10px 20px; font-size: 11px; display: flex; justify-content: space-between; align-items: center;">
+        <span>👤 CONNECTÉ : <b id="u-name-top"></b> (<span id="u-role-top"></span>)</span>
         <button onclick="location.reload()" style="background:var(--danger); border:none; color:white; padding:6px 12px; border-radius:8px; font-size:10px; font-weight:bold; cursor:pointer;">QUITTER</button>
     </div>
 
@@ -86,7 +81,7 @@
         <div id="section-caisse" class="tab-content">
             <div class="card">
                 <h3>📥 RÉCEPTION & ENCAISSEMENT</h3>
-                <input type="tel" id="tel-client" placeholder="N° WhatsApp Client (ex: 6...)" onkeyup="rechercherClient()">
+                <input type="tel" id="tel-client" placeholder="WhatsApp Client" onkeyup="rechercherClient()">
                 <input type="text" id="client-nom" placeholder="Nom Complet du Client">
                 <label style="font-size:11px; font-weight:800; color:#777; margin-left:5px;">DATE DE RETRAIT PRÉVUE :</label>
                 <input type="date" id="date-retrait">
@@ -104,17 +99,15 @@
 
             <div class="card" style="background:var(--dark); color:white;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                    <span style="opacity:0.8; font-size: 14px;">NET À PAYER :</span> 
+                    <span style="opacity:0.8;">NET À PAYER :</span> 
                     <b id="total-caisse" style="font-size:30px; color:var(--success);">0 F</b>
                 </div>
-                <label style="font-size:11px; color:#aaa; font-weight:700;">MODE DE RÈGLEMENT :</label>
                 <select id="mode-pay" style="background:#2c3e50; border:none; color:white;">
                     <option value="Cash">💵 Cash (Espèces)</option>
                     <option value="OM">🍊 Orange Money</option>
                     <option value="Momo">🟡 MTN MoMo</option>
                 </select>
-                <label style="font-size:11px; color:#aaa; font-weight:700;">AVANCE VERSÉE :</label>
-                <input type="number" id="paye-caisse" placeholder="Montant encaissé" oninput="calculerReste()" style="background:#2c3e50; border:none; color:white;">
+                <input type="number" id="paye-caisse" placeholder="Montant Avance" oninput="calculerReste()" style="background:#2c3e50; border:none; color:white; margin-top:10px;">
                 <div id="reste-caisse" style="text-align:right; font-weight:900; color:var(--warning); font-size:18px;">Reste : 0 F</div>
             </div>
 
@@ -123,15 +116,15 @@
             </div>
 
             <div class="card" style="border: 2px solid var(--danger);">
-                <h3>💸 DÉPENSES DE CAISSE (ACHATS)</h3>
-                <input type="text" id="achat-motif" placeholder="Motif (ex: Charbon, Savon...)">
-                <input type="number" id="achat-montant" placeholder="Montant F CFA">
-                <button onclick="enregistrerAchat()" class="btn-main" style="background:var(--danger);">DÉDUIRE DE LA RECETTE</button>
+                <h3>💸 DÉPENSE DE CAISSE</h3>
+                <input type="text" id="achat-motif" placeholder="Motif de l'achat">
+                <input type="number" id="achat-montant" placeholder="Montant">
+                <button onclick="enregistrerAchat()" class="btn-main" style="background:var(--danger);">DÉDUIRE</button>
             </div>
         </div>
 
         <div id="section-atelier" class="tab-content hidden">
-            <h3 style="margin: 20px; font-weight: 900;">👕 ZONE TECHNIQUE - PRODUCTION</h3>
+            <h3 style="margin: 20px;">👕 ZONE TECHNIQUE - PRODUCTION</h3>
             <div id="atelier-liste"></div>
         </div>
 
@@ -139,16 +132,14 @@
             <div class="card">
                 <h3>📊 BILAN JOURNALIER WHATSAPP</h3>
                 <div id="rapport-details" style="margin-bottom: 25px;"></div>
-                <button onclick="envoyerRapportWA()" class="btn-wa" style="height:70px;">📲 ENVOYER LE BILAN AU GÉRANT</button>
+                <button onclick="envoyerRapportWA()" class="btn-wa" style="height:70px;">📲 ENVOYER AU GÉRANT</button>
             </div>
         </div>
 
         <div id="section-performance" class="tab-content hidden">
             <div class="card">
                 <h3>📈 ANALYSE DES PERFORMANCES</h3>
-                <div class="item-row"><span>Recette Aujourd'hui</span> <b id="p-today">0 F</b></div>
-                <div class="item-row"><span>Hebdomadaire (7j)</span> <b id="p-week">0 F</b></div>
-                <div class="item-row"><span>Mensuel (Mois courant)</span> <b id="p-month">0 F</b></div>
+                <div id="perf-display"></div>
                 <div class="item-row" style="background:var(--success); color:white; padding:20px; margin-top:20px;">
                     <span style="font-weight:800;">RECETTE NETTE GLOBALE</span> 
                     <b id="p-net" style="font-size:22px;">0 F</b>
@@ -161,10 +152,10 @@
                 <h3>🧼 INVENTAIRE DES PRODUITS</h3>
                 <div id="stock-display"></div>
                 <div id="admin-stock-control" class="hidden">
-                    <hr>
-                    <h4>📦 AJUSTEMENT MANUEL DES STOCKS</h4>
+                    <hr style="margin:20px 0;">
+                    <h4>📦 AJUSTEMENT DES STOCKS</h4>
                     <select id="upd-stock-item"></select>
-                    <input type="number" id="upd-stock-qte" placeholder="Quantité (+/-)">
+                    <input type="number" id="upd-stock-qte" placeholder="Qté +/-">
                     <button onclick="majStockManuel()" class="btn-main" style="background:var(--warning); color:black;">METTRE À JOUR</button>
                 </div>
             </div>
@@ -172,45 +163,40 @@
 
         <div id="section-logs" class="tab-content hidden">
             <div class="card">
-                <h3>📜 JOURNAL D'ACTIVITÉS (HISTORIQUE)</h3>
-                <div id="logs-container" style="max-height:500px; overflow-y:auto; font-size:10px; font-family:monospace;"></div>
+                <h3>📜 JOURNAL D'ACTIVITÉS</h3>
+                <div id="logs-container" style="max-height:500px; overflow-y:auto; background:#f1f4f8; border-radius:15px; padding:15px; font-family:monospace; font-size:11px;"></div>
             </div>
         </div>
 
         <div id="section-admin" class="tab-content hidden">
-            <div class="card" style="background: #fff3cd; border: 1px solid #ffeeba;">
-                <h3>⚙️ CONFIGURATION CLOUD SYNCHRO</h3>
-                <p style="font-size:11px;">Entrez l'URL Firebase pour synchroniser vos appareils :</p>
-                <input type="text" id="fb-url" placeholder="https://votre-projet.firebaseio.com">
+            <div class="card" style="background: #fff3cd;">
+                <h3>⚙️ CONFIGURATION CLOUD</h3>
+                <input type="text" id="fb-url" placeholder="https://votre-firebase.firebaseio.com">
                 <button onclick="saveFBConfig()" class="btn-main" style="background:var(--dark);">ACTIVER LA SYNCHRONISATION</button>
             </div>
 
             <div class="card" style="border: 2px solid var(--primary);">
-                <h3>👑 PERSONNEL & CONTRÔLE D'ACCÈS</h3>
+                <h3>👑 PERSONNEL & ACCÈS</h3>
                 <div id="staff-list"></div>
-                <hr style="margin:25px 0;">
-                <h4 style="color:var(--primary);">➕ CRÉER UN NOUVEL ACCÈS PERSONNEL</h4>
+                <hr>
+                <h4>CRÉER UN COMPTE</h4>
                 <input type="text" id="ns-nom" placeholder="Nom Complet">
-                <input type="text" id="ns-log" placeholder="Identifiant (Login)">
-                <input type="password" id="ns-pass" placeholder="Mot de passe">
+                <input type="text" id="ns-log" placeholder="Login">
+                <input type="password" id="ns-pass" placeholder="Password">
                 <select id="ns-role">
                     <option value="Caissière">Caissière</option>
                     <option value="Zone Technique">Zone Technique</option>
-                    <option value="ADMIN">ADMINISTRATEUR (Gérant)</option>
+                    <option value="ADMIN">ADMINISTRATEUR</option>
                 </select>
                 <button onclick="ajouterEmploye()" class="btn-main" style="background:var(--success);">GÉNÉRER L'ACCÈS</button>
             </div>
 
             <div class="card">
-                <h3>✨ GESTION DYNAMIQUE DE LA GRILLE</h3>
+                <h3>✨ AJOUTER ARTICLE À LA GRILLE</h3>
                 <input type="text" id="new-art-cat" placeholder="Catégorie (ex: ROBES)">
-                <input type="text" id="new-art-nom" placeholder="Désignation du vêtement">
-                <input type="number" id="new-art-prix" placeholder="Prix standard F CFA">
-                <button onclick="ajouterNouveauProduit()" class="btn-main">ACTUALISER LA GRILLE</button>
-            </div>
-            
-            <div class="card" style="text-align:center;">
-                <button onclick="exportData()" class="btn-main" style="background:#6c5ce7;">📤 EXPORTER TOUTE LA BASE (.JSON)</button>
+                <input type="text" id="new-art-nom" placeholder="Désignation">
+                <input type="number" id="new-art-prix" placeholder="Prix standard">
+                <button onclick="ajouterNouveauProduit()" class="btn-main">ACTUALISER LA LISTE</button>
             </div>
         </div>
     </div>
@@ -228,7 +214,6 @@
 
 <div id="ticket-print" style="display:none; text-align:center; font-family:monospace; padding:10px;">
     <b>SUPER CLEAN PRESSING</b><br>
-    "Le bien être de vos vêtements"<br>
     --------------------------------<br>
     <div id="tk-body" style="text-align:left; font-size:12px;"></div>
 </div>
@@ -237,25 +222,25 @@
 /* ==========================================================================
    1. GRILLE TARIFAIRE INTÉGRALE (ZÉRO SIMPLIFICATION)
    ========================================================================== */
-const GRILLE_DE_BASE = {
-    "LES HAUTS": { "T-Shirt": 500, "Chemise": 500, "Polo": 500, "Pull Over": 700, "Blouson": 1500, "Démembré": 300, "Veste 2 pièces": 1500, "Veste 3 pièces": 2000, "Pantalon jeans": 500, "Jupe plissée": 1000 },
-    "ENSEMBLES": { "Costume simple": 2000, "Costume de luxe": 2500, "Boubou femme": 1500, "Boubou homme 3P": 2500, "Jogging": 1500, "Pyjama": 1000 },
-    "LES ROBES": { "Robe simple": 1000, "Robe de soirée": 3000, "Kaba long": 1500, "Toge": 3500 },
-    "LINGES DE LIT": { "1 Drap": 750, "Couette": 2000, "Housse de couette": 2500, "Couverture": 4000 },
+const GRILLE_OFFICIELLE = {
+    "LES HAUTS": { "T-Shirt": 500, "Chemise": 500, "Polo": 500, "Pull Over": 700, "Blouson": 1500, "Démembré": 300, "Veste 2 pièces": 1500, "Veste 3 pièces": 2000, "Pantalon jeans": 500, "Jupe simple": 500, "Jupe plissée": 1000 },
+    "ENSEMBLES": { "Costume simple": 2000, "Costume luxe": 2500, "Boubou femme": 1500, "Boubou homme 3P": 2500, "Jogging": 1500, "Pyjama 2P": 1000 },
+    "LES ROBES": { "Robe simple": 1000, "Robe de soirée": 3000, "Kaba court": 1000, "Kaba long": 1500, "Toge": 3500 },
+    "LINGES DE LIT": { "1 Drap": 750, "Ensemble Draps": 2000, "Couverture": 4000, "Couette": 2000 },
     "VÊTEMENTS ENFANTS": { "Ensemble enfant": 1000, "Robe enfant": 500, "Haut enfant": 500 },
-    "AMEUBLEMENT / BAIN": { "Rideau lourd": 1500, "Rideau léger": 1000, "Grande Serviette": 1000, "Peignoir": 2000 },
+    "AMEUBLEMENT / BAIN": { "Rideau lourd": 1500, "Petite Serviette": 500, "Grande Serviette": 1000, "Peignoir": 2000 },
     "ACCESSOIRES": { "Tennis": 500, "Cravate": 500 }
 };
 
 /* ==========================================================================
-   2. ÉTATS ET MOTEUR CLOUD HYBRIDE (ANTI-BUG)
+   2. ÉTATS ET MOTEUR CLOUD HYBRIDE
    ========================================================================== */
 let CLOUD_URL = localStorage.getItem('sc_fb_url') || "";
-let GRILLE = JSON.parse(localStorage.getItem('sc_local_grille')) || GRILLE_DE_BASE;
+let GRILLE = JSON.parse(localStorage.getItem('sc_local_grille')) || GRILLE_OFFICIELLE;
 let db = [], staff = [], stocks = [], logs = [], achats = [];
+let panier = [], currentUser = null;
 
-// Sécurité : Compte Administrateur maître gravé
-const MASTER_ADMIN = {nom: "Directeur Général", login: "admin", pass: "0000", role: "ADMIN", actif: true};
+const MASTER_ADMIN = {nom: "Directeur", login: "admin", pass: "0000", role: "ADMIN", actif: true};
 
 async function syncPush(path, data) {
     if(!CLOUD_URL) return;
@@ -267,10 +252,9 @@ async function syncPush(path, data) {
 
 async function syncPull() {
     if(!CLOUD_URL) {
-        // Mode local pur si pas de Cloud configuré
         db = JSON.parse(localStorage.getItem('sc_db')) || [];
         staff = JSON.parse(localStorage.getItem('sc_staff')) || [MASTER_ADMIN];
-        stocks = JSON.parse(localStorage.getItem('sc_stocks')) || [{id:'savon', nom:'Savon', qte:100, unite:'L'}];
+        stocks = JSON.parse(localStorage.getItem('sc_stocks')) || [{id:'savon', nom:'Savon', qte:100, unite:'L'},{id:'housses', nom:'Housses', qte:500, unite:'pcs'}];
         logs = JSON.parse(localStorage.getItem('sc_logs')) || [];
         achats = JSON.parse(localStorage.getItem('sc_achats')) || [];
         updateSyncUI(false);
@@ -278,22 +262,19 @@ async function syncPull() {
     }
     try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 4000); // 4 sec max
+        const timeoutId = setTimeout(() => controller.abort(), 3500);
         const res = await fetch(`${CLOUD_URL}/.json`, { signal: controller.signal });
         const data = await res.json();
         if(data) {
-            db = data.db || [];
-            staff = data.staff || [MASTER_ADMIN];
-            stocks = data.stocks || [];
-            logs = data.logs || [];
-            achats = data.achats || [];
+            db = data.db || []; staff = data.staff || [MASTER_ADMIN];
+            stocks = data.stocks || [{id:'savon', nom:'Savon', qte:100, unite:'L'},{id:'housses', nom:'Housses', qte:500, unite:'pcs'}]; 
+            logs = data.logs || []; achats = data.achats || [];
             if(data.GRILLE) GRILLE = data.GRILLE;
             updateSyncUI(true);
         }
         return true;
     } catch(e) {
         updateSyncUI(false);
-        // Backup local si Cloud échoue
         db = JSON.parse(localStorage.getItem('sc_db')) || [];
         staff = JSON.parse(localStorage.getItem('sc_staff')) || [MASTER_ADMIN];
         return true;
@@ -303,31 +284,21 @@ async function syncPull() {
 function updateSyncUI(online) {
     const el = document.getElementById('sync-status');
     el.className = online ? "sync-tag online" : "sync-tag offline";
-    el.innerText = online ? "☁️ CLOUD SYNCHRONISÉ" : "⚡ MODE LOCAL ACTIF";
+    el.innerText = online ? "☁️ CLOUD : ON" : "⚡ LOCAL : ON";
 }
 
 /* ==========================================================================
-   3. SÉCURITÉ & AUTHENTIFICATION
+   3. AUTHENTIFICATION
    ========================================================================== */
-let currentUser = null;
-
 async function login() {
-    const errorEl = document.getElementById('login-error');
-    errorEl.innerText = "Chargement des données...";
-    
+    document.getElementById('login-error').innerText = "Vérification...";
     await syncPull();
-    
     const l = document.getElementById('u-login').value;
     const p = document.getElementById('u-pass').value;
-    
-    // Vérification du compte (Cloud ou Local)
     const u = staff.find(x => x.login === l && x.pass === p);
     
     if(u) {
-        if(!u.actif && u.role !== "ADMIN") {
-            errorEl.innerText = "🚫 ACCÈS BLOQUÉ : Contactez l'admin.";
-            return;
-        }
+        if(!u.actif && u.role !== "ADMIN") { document.getElementById('login-error').innerText = "🚫 COMPTE BLOQUÉ."; return; }
         currentUser = u;
         document.getElementById('auth-screen').classList.add('hidden');
         document.getElementById('app').classList.remove('hidden');
@@ -335,41 +306,37 @@ async function login() {
         document.getElementById('u-role-top').innerText = u.role;
         document.getElementById('fb-url').value = CLOUD_URL;
         addLog("Ouverture de session");
-        filtrerRoles();
-        initDropdownArticles();
-    } else {
-        errorEl.innerText = "Identifiants incorrects.";
-    }
+        filtrerRoles(); initDropdownArticles();
+    } else { document.getElementById('login-error').innerText = "Identifiants incorrects."; }
 }
 
 function filtrerRoles() {
     const r = currentUser.role;
-    const isBoss = (r === "ADMIN");
-    const isCaisse = (r === "ADMIN" || r === "Caissière");
-    
+    const isBoss = (r === "ADMIN"), isCaisse = (r === "ADMIN" || r === "Caissière");
     document.getElementById('btn-caisse').classList.toggle('hidden', !isCaisse);
     document.getElementById('btn-rapport').classList.toggle('hidden', !isCaisse);
     document.getElementById('btn-performance').classList.toggle('hidden', !isBoss);
     document.getElementById('btn-logs').classList.toggle('hidden', !isBoss);
     document.getElementById('btn-admin').classList.toggle('hidden', !isBoss);
-    
     if(isBoss) document.getElementById('admin-stock-control').classList.remove('hidden');
     tab(isCaisse ? 'section-caisse' : 'section-atelier');
 }
 
-/* ==========================================================================
-   4. LOGIQUE CAISSE & ACHATS
-   ========================================================================== */
-let panier = [];
+function addLog(action) {
+    logs.unshift(`[${new Date().toLocaleString()}] ${currentUser.nom}: ${action}`);
+    if(CLOUD_URL) syncPush('logs', logs.slice(0, 300));
+    else localStorage.setItem('sc_logs', JSON.stringify(logs.slice(0, 300)));
+}
 
+/* ==========================================================================
+   4. CAISSE & TECHNIQUE
+   ========================================================================== */
 function initDropdownArticles() {
     const sel = document.getElementById('select-article');
-    sel.innerHTML = '<option value="">-- Choisir un vêtement --</option>';
+    sel.innerHTML = '<option value="">-- Choisir Article --</option>';
     for(let cat in GRILLE) {
         let g = document.createElement('optgroup'); g.label = cat;
-        for(let art in GRILLE[cat]) {
-            let o = document.createElement('option'); o.value = GRILLE[cat][art]; o.innerText = art; g.appendChild(o);
-        }
+        for(let art in GRILLE[cat]) { let o = document.createElement('option'); o.value = GRILLE[cat][art]; o.innerText = art; g.appendChild(o); }
         sel.appendChild(g);
     }
     document.getElementById('upd-stock-item').innerHTML = stocks.map(s => `<option value="${s.id}">${s.nom}</option>`).join('');
@@ -387,73 +354,35 @@ function ajouterAuPanier() {
 function renderPanier() {
     const t = panier.reduce((a,b)=>a+b.prix, 0);
     document.getElementById('total-caisse').innerText = t + " F";
-    document.getElementById('panier-liste').innerHTML = panier.map((x,i)=>`
-        <div class="item-row">
-            <b>${x.nom}</b> <span>${x.prix} F <button onclick="panier.splice(${i},1);renderPanier()" style="color:red; border:none; background:none; font-weight:900; margin-left:10px;">✕</button></span>
-        </div>`).join('');
+    document.getElementById('panier-liste').innerHTML = panier.map((x,i)=>`<div class="item-row"><b>${x.nom}</b> <span>${x.prix} F <button onclick="panier.splice(${i},1);renderPanier()" style="color:red; border:none; background:none;">✕</button></span></div>`).join('');
     calculerReste();
 }
 
 function calculerReste() {
     const t = panier.reduce((a,b)=>a+b.prix, 0), p = parseInt(document.getElementById('paye-caisse').value) || 0;
-    document.getElementById('reste-caisse').innerText = `Reste : ${t - p} F CFA`;
+    document.getElementById('reste-caisse').innerText = `Reste : ${t - p} F`;
 }
 
 async function validerCommande() {
     const nom = document.getElementById('client-nom').value, dr = document.getElementById('date-retrait').value, tel = document.getElementById('tel-client').value;
-    if(!nom || panier.length === 0) return alert("Informations client incomplètes.");
-    
-    const cmd = {
-        id: Math.floor(1000 + Math.random()*8999), client: nom, tel: tel, articles: [...panier],
-        total: panier.reduce((a,b)=>a+b.prix,0), paye: parseInt(document.getElementById('paye-caisse').value)||0,
-        mode: document.getElementById('mode-pay').value, retrait: dr, agent: currentUser.nom,
-        timestamp: new Date().getTime(), statut: "En cours"
-    };
-
+    if(!nom || panier.length === 0) return alert("Champs incomplets.");
+    const cmd = { id: Math.floor(1000+Math.random()*8999), client: nom, tel: tel, articles: [...panier], total: panier.reduce((a,b)=>a+b.prix,0), paye: parseInt(document.getElementById('paye-caisse').value)||0, mode: document.getElementById('mode-pay').value, retrait: dr, timestamp: new Date().getTime(), agent: currentUser.nom, statut: "En cours" };
     db.unshift(cmd);
-    addLog(`Encaissement Ticket #${cmd.id}`);
-    
-    // Synchro
-    if(CLOUD_URL) {
-        await syncPush('db', db);
-        await syncPush('logs', logs);
-    } else {
-        localStorage.setItem('sc_db', JSON.stringify(db));
-        localStorage.setItem('sc_logs', JSON.stringify(logs));
-    }
+    addLog(`Nouveau ticket #${cmd.id}`);
+    if(CLOUD_URL) await syncPush('db', db); else localStorage.setItem('sc_db', JSON.stringify(db));
     location.reload();
 }
 
-async function enregistrerAchat() {
-    const m = document.getElementById('achat-motif').value, mont = parseInt(document.getElementById('achat-montant').value);
-    if(m && mont) {
-        achats.push({motif: m, mont, agent: currentUser.nom, timestamp: new Date().getTime()});
-        addLog(`Sortie de caisse: ${m} (-${mont}F)`);
-        if(CLOUD_URL) await syncPush('achats', achats); else localStorage.setItem('sc_achats', JSON.stringify(achats));
-        alert("Dépense déduite !"); location.reload();
-    }
-}
-
-/* ==========================================================================
-   5. ZONE TECHNIQUE (ÉTANCHE À L'ARGENT)
-   ========================================================================== */
 function renderAtelier() {
     const canSeeMoney = (currentUser.role === "ADMIN" || currentUser.role === "Caissière");
     document.getElementById('atelier-liste').innerHTML = db.filter(c => c.statut !== "Livré").map(c => `
         <div class="card">
             <div style="display:flex; justify-content:space-between;"><b>#${c.id} - ${c.client}</b> <small>${c.retrait}</small></div>
-            
             ${canSeeMoney ? `<div class="solde-badge" style="margin-top:5px;">À PAYER : ${c.total-c.paye} F</div>` : ''}
-            
             <div style="margin-top:10px;">
-                ${c.articles.map(a => `
-                    <div class="item-row">
-                        <span>${a.nom}</span>
-                        ${!a.pret ? `<button onclick="finirArt(${c.id}, ${a.uid})" style="background:var(--success); color:white; border:none; padding:8px 15px; border-radius:10px;">PRÊT</button>` : `<b style="color:green;">📍 FINI</b>`}
-                    </div>`).join('')}
+                ${c.articles.map(a => `<div class="item-row"><span>${a.nom}</span> ${!a.pret ? `<button onclick="finirArt(${c.id}, ${a.uid})" style="background:var(--success); color:white; border:none; padding:5px 12px; border-radius:10px;">FINI</button>` : `<b style="color:green;">PRÊT</b>`}</div>`).join('')}
             </div>
-            
-            ${canSeeMoney ? `<button onclick="livrer(${c.id})" class="btn-main" style="background:var(--dark); margin-top:10px;">LIVRER ET FERMER</button>` : ''}
+            ${canSeeMoney ? `<button onclick="livrer(${c.id})" class="btn-main" style="background:var(--dark); margin-top:10px;">LIVRER</button>` : ''}
         </div>`).join('');
 }
 
@@ -465,23 +394,30 @@ async function finirArt(cid, auid) {
 
 async function livrer(id) {
     const c = db.find(x => x.id === id); c.statut = "Livré"; c.paye = c.total;
-    addLog(`Livraison Ticket #${id}`);
+    addLog(`Livraison #${id}`);
     if(CLOUD_URL) await syncPush('db', db); else localStorage.setItem('sc_db', JSON.stringify(db));
     renderAtelier();
 }
 
 /* ==========================================================================
-   6. RAPPORTS & ADMIN
+   5. STOCKS, ADMIN, NAVIGATION
    ========================================================================== */
-function renderAdmin() {
-    document.getElementById('staff-list').innerHTML = staff.map((s,i) => `
-        <div class="item-row" style="background:${s.actif?'':'#fff1f2'}">
-            <span><b>${s.nom}</b> (${s.role}) <span class="status-pill ${s.actif?'pill-active':'pill-blocked'}">${s.actif?'Actif':'Bloqué'}</span></span>
-            ${i!==0?`<button onclick="toggleAccess(${i})">BASCULER</button>`:''}
-        </div>`).join('');
+function renderStocks() {
+    document.getElementById('stock-display').innerHTML = stocks.map(s => `<div class="item-row"><span>${s.nom}</span> <b>${s.qte.toFixed(1)} ${s.unite}</b></div>`).join('');
 }
 
-async function toggleAccess(i) {
+async function majStockManuel() {
+    const id = document.getElementById('upd-stock-item').value, q = parseFloat(document.getElementById('upd-stock-qte').value);
+    stocks.find(x => x.id === id).qte += q;
+    if(CLOUD_URL) await syncPush('stocks', stocks); else localStorage.setItem('sc_stocks', JSON.stringify(stocks));
+    renderStocks();
+}
+
+function renderAdmin() {
+    document.getElementById('staff-list').innerHTML = staff.map((s,i) => `<div class="item-row"><span><b>${s.nom}</b> (${s.role}) <span class="status-pill ${s.actif?'pill-active':'pill-blocked'}">${s.actif?'Actif':'Bloqué'}</span></span> ${i!==0?`<button onclick="toggleUser(${i})">BASCULER</button>`:''}</div>`).join('');
+}
+
+async function toggleUser(i) {
     staff[i].actif = !staff[i].actif;
     if(CLOUD_URL) await syncPush('staff', staff); else localStorage.setItem('sc_staff', JSON.stringify(staff));
     renderAdmin();
@@ -489,25 +425,12 @@ async function toggleAccess(i) {
 
 async function ajouterEmploye() {
     const n=document.getElementById('ns-nom').value, l=document.getElementById('ns-log').value, p=document.getElementById('ns-pass').value, r=document.getElementById('ns-role').value;
-    if(n&&l&&p) { 
-        staff.push({nom:n, login:l, pass:p, role:r, actif:true}); 
-        if(CLOUD_URL) await syncPush('staff', staff); else localStorage.setItem('sc_staff', JSON.stringify(staff));
-        renderAdmin(); 
-    }
+    if(n&&l&&p) { staff.push({nom:n, login:l, pass:p, role:r, actif:true}); if(CLOUD_URL) await syncPush('staff', staff); else localStorage.setItem('sc_staff', JSON.stringify(staff)); renderAdmin(); }
 }
 
 async function ajouterNouveauProduit() {
     const c=document.getElementById('new-art-cat').value.toUpperCase(), n=document.getElementById('new-art-nom').value, p=parseInt(document.getElementById('new-art-prix').value);
-    if(c&&n&&p) { 
-        if(!GRILLE[c]) GRILLE[c]={}; GRILLE[c][n]=p; 
-        if(CLOUD_URL) await syncPush('GRILLE', GRILLE); else localStorage.setItem('sc_local_grille', JSON.stringify(GRILLE));
-        initDropdownArticles(); alert("Grille tarifaire actualisée !");
-    }
-}
-
-function saveFBConfig() {
-    let url = document.getElementById('fb-url').value; if(url.endsWith('/')) url = url.slice(0, -1);
-    localStorage.setItem('sc_fb_url', url); location.reload();
+    if(c&&n&&p) { if(!GRILLE[c]) GRILLE[c]={}; GRILLE[c][n]=p; if(CLOUD_URL) await syncPush('GRILLE', GRILLE); else localStorage.setItem('sc_local_grille', JSON.stringify(GRILLE)); initDropdownArticles(); alert("Ajouté !"); }
 }
 
 function tab(id) {
@@ -517,16 +440,17 @@ function tab(id) {
     const btn = document.getElementById('btn-' + id.split('-')[1]); if(btn) btn.classList.add('active');
     if(id==='section-atelier') renderAtelier();
     if(id==='section-admin') renderAdmin();
-    if(id==='section-performance') {
-        const total = db.reduce((a,b)=>a+b.paye, 0);
-        const spent = achats.reduce((a,b)=>a+b.mont, 0);
-        document.getElementById('p-net').innerText = (total-spent) + " F CFA";
-    }
+    if(id==='section-stocks') renderStocks();
+    if(id==='section-logs') document.getElementById('logs-container').innerHTML = logs.map(l => `<div style="font-size:10px; padding:5px; border-bottom:1px solid #eee;">${l}</div>`).join('');
 }
 
-function addLog(a) { logs.unshift(`[${new Date().toLocaleString()}] ${currentUser.nom}: ${a}`); }
+function saveFBConfig() {
+    let url = document.getElementById('fb-url').value; if(url.endsWith('/')) url = url.slice(0, -1);
+    localStorage.setItem('sc_fb_url', url); location.reload();
+}
+
 function rechercherClient() { const t=document.getElementById('tel-client').value; if(t.length>=8){ const f=db.find(x=>x.tel&&x.tel.includes(t)); if(f) document.getElementById('client-nom').value=f.client; } }
-function exportData() { const b=new Blob([JSON.stringify({db, staff, stocks, achats, logs, GRILLE})], {type:"application/json"}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download="SuperCleanBackup.json"; a.click(); }
+async function enregistrerAchat() { const m=document.getElementById('achat-motif').value, mt=parseInt(document.getElementById('achat-montant').value); if(m&&mt){achats.push({motif:m,mont:mt,agent:currentUser.nom,timestamp:new Date().getTime()}); if(CLOUD_URL) await syncPush('achats', achats); else localStorage.setItem('sc_achats', JSON.stringify(achats)); location.reload();}}
 </script>
 </body>
 </html>
